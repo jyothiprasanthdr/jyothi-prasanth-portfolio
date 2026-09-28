@@ -26,3 +26,5 @@ dist-ssr
 
 # impeccable decision-page server logs
 .impeccable/questions/
+.vercel
+.env*
