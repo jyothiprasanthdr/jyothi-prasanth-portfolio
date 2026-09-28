@@ -86,7 +86,7 @@ const summary = `${total} GitHub contributions from ${fmt(days[0].date)} to ${fm
   /* Unconditional so the end of the run (html[data-run] removed) never cuts the print short. */
   .day {
     transition: opacity 160ms var(--ease-out);
-    transition-delay: calc(var(--w) * 9ms);
+    transition-delay: calc(var(--w) * 16ms);
   }
 
   :global(html[data-run] .cell:not([data-state='done'])) .day {

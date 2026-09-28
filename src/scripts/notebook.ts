@@ -5,8 +5,8 @@ const root = document.documentElement;
 const cells = [...document.querySelectorAll<HTMLElement>('[data-cell]')];
 const kernel = document.querySelector<HTMLElement>('[data-kernel]');
 
-const RUN_MS = 150; // how long a code cell shows In [*]:
-const STAGGER_MS = 60; // gap before the next cell starts
+const RUN_MS = 800; // how long a code cell shows In [*]:
+const STAGGER_MS = 320; // gap before the next cell starts
 const TYPE_MS = 34; // per character when a markdown cell is typed in
 const RENDER_PAUSE_MS = 220; // caret rests on the finished line, then the cell renders (Shift+Enter)
 

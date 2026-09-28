@@ -224,9 +224,9 @@ textarea {
    The transition is unconditional so ending the run never cuts it short. */
 .print {
   transition:
-    opacity 220ms var(--ease-out),
-    transform 220ms var(--ease-out);
-  transition-delay: calc(60ms + var(--i, 0) * 70ms);
+    opacity 300ms var(--ease-out),
+    transform 300ms var(--ease-out);
+  transition-delay: calc(150ms + var(--i, 0) * 140ms);
 }
 
 html[data-run] .cell:not([data-state='done']) .print {
