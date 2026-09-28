@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-28T09:45:00Z",
+  "title": "Design System: jyothi-prasanth.ipynb",
+  "extensions": {
+    "colorMeta": {
+      "signal": { "role": "primary", "displayName": "Execution Yellow", "canonical": "#f5c400" },
+      "ground": { "role": "neutral", "displayName": "Lab Paper", "canonical": "#f7f7f4", "tonalRamp": ["#1b1c1e", "#3a3c40", "#5e6269", "#6a6c70", "#b9b8b2", "#d5d4ce", "#e6e5e0", "#f0efea", "#f7f7f4", "#ffffff"] },
+      "surface": { "role": "neutral", "displayName": "Cell White", "canonical": "#ffffff" },
+      "code-paper": { "role": "neutral", "displayName": "Code Paper", "canonical": "#f0efea" },
+      "rule": { "role": "neutral", "displayName": "Hairline", "canonical": "#e6e5e0" },
+      "rule-strong": { "role": "neutral", "displayName": "Hairline Strong", "canonical": "#d5d4ce" },
+      "graphite-5": { "role": "neutral", "displayName": "Graphite 5", "canonical": "#b9b8b2" },
+      "graphite-7": { "role": "neutral", "displayName": "Graphite 7", "canonical": "#6a6c70" },
+      "graphite-8": { "role": "neutral", "displayName": "Graphite 8", "canonical": "#5e6269" },
+      "graphite-9": { "role": "neutral", "displayName": "Graphite 9", "canonical": "#3a3c40" },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1b1c1e" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The owner's name in section 1 only." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings and page titles." },
+      "title": { "displayName": "Title", "purpose": "Project names and sub-headings." },
+      "body": { "displayName": "Body", "purpose": "All prose; 62-68ch max." },
+      "label": { "displayName": "Mono Label", "purpose": "Prompts, code, stdout, counts, dates; tabular figures." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Entering elements: cell outputs, dialogs, button press." },
+      { "name": "ease-in-out", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "On-screen movement: caret rotation, rail marker." },
+      { "name": "cell-run", "value": "150ms chip, 180ms output fade + 4px rise, 60ms stagger", "purpose": "First-visit Run all cascade; skipped on return, deep link, or reduced motion." },
+      { "name": "press", "value": "scale(0.97) 160ms", "purpose": "Tactile button feedback." },
+      { "name": "expander", "value": "grid-template-rows 220ms open / 160ms close", "purpose": "Project details front/back." }
+    ],
+    "breakpoints": [
+      { "name": "phone-narrow", "value": "479px" },
+      { "name": "tablet", "value": "859px" },
+      { "name": "laptop", "value": "1023px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one primary action per view (Resume).",
+      "html": "<button class=\"ds-btn-primary\">Resume</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border: 1px solid transparent; border-radius: 4px; background: #1b1c1e; color: #ffffff; font: 500 0.9375rem/1 'Geist Variable', system-ui, sans-serif; cursor: pointer; transition: transform 160ms cubic-bezier(0.23,1,0.32,1), background-color 150ms ease; } .ds-btn-primary:hover { background: #3a3c40; } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid #1b1c1e; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Supporting actions: Email me, View repo, Copy.",
+      "html": "<button class=\"ds-btn-secondary\">Email me</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px; border: 1px solid #d5d4ce; border-radius: 4px; background: #ffffff; color: #1b1c1e; font: 500 0.9375rem/1 'Geist Variable', system-ui, sans-serif; cursor: pointer; transition: transform 160ms cubic-bezier(0.23,1,0.32,1), border-color 150ms ease; } .ds-btn-secondary:hover { border-color: #1b1c1e; } .ds-btn-secondary:active { transform: scale(0.97); } .ds-btn-secondary:focus-visible { outline: 2px solid #1b1c1e; outline-offset: 2px; }"
+    },
+    {
+      "name": "Running Chip",
+      "kind": "chip",
+      "refersTo": "chip-running",
+      "description": "The only use of the accent: running or active state, always with ink text.",
+      "html": "<span class=\"ds-chip\">[*]</span>",
+      "css": ".ds-chip { display: inline-block; padding: 1px 6px; border-radius: 4px; background: #f5c400; color: #1b1c1e; font: 400 0.8125rem/1.5 'Geist Mono Variable', ui-monospace, monospace; }"
+    },
+    {
+      "name": "Code Cell",
+      "kind": "custom",
+      "refersTo": "code-input",
+      "description": "Signature component: prompt gutter plus a code input showing real repository source.",
+      "html": "<div class=\"ds-cell\"><span class=\"ds-prompt\">In [1]:</span><div class=\"ds-input\"><p class=\"ds-label\">src/lib/notes.ts</p><pre>export function recentNotebooks(limit = 6) {\n  return notebooks.slice(0, limit);\n}</pre></div></div>",
+      "css": ".ds-cell { display: grid; grid-template-columns: 72px 1fr; gap: 16px; background: #f7f7f4; padding: 12px; } .ds-cell:hover .ds-prompt { color: #1b1c1e; } .ds-prompt { padding-top: 14px; text-align: right; font: 0.8125rem 'Geist Mono Variable', ui-monospace, monospace; color: #6a6c70; transition: color 120ms ease; } .ds-input { background: #f0efea; border: 1px solid #e6e5e0; border-radius: 8px; padding: 12px 16px 14px; } .ds-label { margin: 0 0 6px; font: 0.8125rem 'Geist Mono Variable', ui-monospace, monospace; color: #5e6269; } .ds-input pre { margin: 0; font: 0.84rem/1.6 'Geist Mono Variable', ui-monospace, monospace; color: #3a3c40; }"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "refersTo": "search",
+      "description": "Notebook library search.",
+      "html": "<label class=\"ds-search\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z\"/></svg><input placeholder=\"RAG, LSTM, Docker…\"></label>",
+      "css": ".ds-search { display: flex; align-items: center; gap: 8px; max-width: 420px; padding: 0 12px; background: #ffffff; border: 1px solid #d5d4ce; border-radius: 4px; color: #5e6269; } .ds-search:focus-within { outline: 2px solid #1b1c1e; outline-offset: 2px; } .ds-search input { flex: 1; min-height: 40px; border: 0; background: none; font: 1rem 'Geist Variable', system-ui, sans-serif; color: #1b1c1e; caret-color: #1b1c1e; outline: none; } .ds-search input::placeholder { color: #5e6269; }"
+    },
+    {
+      "name": "Contents Rail",
+      "kind": "nav",
+      "refersTo": "rail",
+      "description": "Sticky table of contents; the current section shows the running chip.",
+      "html": "<nav class=\"ds-rail\"><a href=\"#\" aria-current=\"true\"><span class=\"n\">1</span>About</a><a href=\"#\"><span class=\"n\">2</span>Handwritten notebooks</a><a href=\"#\"><span class=\"n\">3</span>Projects</a></nav>",
+      "css": ".ds-rail { display: grid; gap: 2px; width: 200px; font: 0.9375rem 'Geist Variable', system-ui, sans-serif; } .ds-rail a { display: flex; gap: 10px; padding: 5px 0; color: #5e6269; text-decoration: none; transition: color 120ms ease; } .ds-rail a:hover, .ds-rail a[aria-current='true'] { color: #1b1c1e; } .ds-rail .n { min-width: 22px; text-align: center; font: 0.8125rem 'Geist Mono Variable', ui-monospace, monospace; color: #6a6c70; } .ds-rail a[aria-current='true'] .n { background: #f5c400; color: #1b1c1e; border-radius: 4px; padding: 0 5px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Run-All Notebook",
+    "overview": "The site is a Jupyter notebook you run. Every section is a cell. Markdown cells render headings and prose. Code cells show real source from this repository with an In [n]: prompt and render their results beside Out[n]:. On a first visit the page executes as you read it. That is the one piece of theatre the system allows, and it exists to show that the page is doing work. The mood is a lab bench in daylight: paper-white ground, graphite ink, hairline rules, and nothing that glows. Evidence carries the page. The handwritten notebook pages are the richest material on the site, and the interface steps back so they can lead.",
+    "keyCharacteristics": [
+      "Light paper ground; one theme.",
+      "A graphite neutral ramp is the only tonal system.",
+      "One signal yellow that always means \"running / active\".",
+      "Geist Sans for reading, Geist Mono only where a notebook itself uses mono.",
+      "Flat: depth comes from rules and overlap, never from shadows."
+    ],
+    "rules": [
+      { "name": "The One Meaning Rule", "body": "Execution Yellow means running or active. It never encodes data, never decorates, and never marks selection. Text selection uses a neutral ramp step instead.", "section": "colors" },
+      { "name": "The Chip-or-Nothing Rule", "body": "The accent appears only as a filled chip with ink text inside, which keeps state readable without relying on a 1.5:1 color edge.", "section": "colors" },
+      { "name": "The Mono Is Machine Rule", "body": "Mono appears only for things a notebook prints: prompts, code, stdout, counts, dates. It is never used for headings or for style.", "section": "typography" },
+      { "name": "The Overlap Not Shadow Rule", "body": "If something needs to sit above something else, it gets a rule, a tone step, or a chip. It never gets a drop shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Execution Yellow only as a chip with Ink text, only for running or active state.",
+      "Do keep every code cell's input a real // #region block read from the repository at build time.",
+      "Do separate surfaces with 1px hairlines and tone steps.",
+      "Do keep entrance motion under 300ms with a strong ease-out, and never animate keyboard-initiated moves.",
+      "Do let the handwritten page images carry the visual weight; frame them in a 1px Hairline at 4px radius."
+    ],
+    "donts": [
+      "Don't add drop shadows, glows, gradients, or a dark theme section.",
+      "Don't introduce a second accent color or use the yellow for data, selection, or decoration.",
+      "Don't set headings in mono or add small uppercase kicker labels above sections.",
+      "Don't use a thick left border as a callout. Error output uses a full 1px border on Code Paper.",
+      "Don't show the owner's photograph anywhere, including social preview images."
+    ]
+  }
+}

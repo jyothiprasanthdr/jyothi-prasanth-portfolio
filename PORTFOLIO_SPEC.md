@@ -1,7 +1,7 @@
 # Portfolio Spec v4: The Run-All Notebook
 
 Owner: Jyothi Prasanth D R
-Status: **proposal awaiting your confirmation.** Nothing here is built yet. Replaces v3 (which featured employer case studies, now ruled out).
+Status: **built.** Confirmed by the owner ("proceed") and implemented in Astro. The impeccable finish review verdict was *ship* for all review findings. The shipped design system is recorded in [DESIGN.md](DESIGN.md). Replaces v3, which featured employer case studies that are now ruled out.
 
 **How this was produced.** The four skills installed in `.claude/skills/` drove it, each for a different job:
 

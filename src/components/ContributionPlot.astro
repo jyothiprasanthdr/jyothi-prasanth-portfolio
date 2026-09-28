@@ -1,0 +1,107 @@
+---
+// A heat grid of real GitHub contributions, drawn from src/data/stats.json. Neutral ramp only:
+// the accent means "running", so it never encodes data.
+interface Props {
+  days: { date: string; count: number }[];
+  /** Show only the most recent N weeks (used on phones, where a full year is too small to read). */
+  lastWeeks?: number;
+}
+const { days: allDays, lastWeeks } = Astro.props;
+const days = lastWeeks ? allDays.slice(-lastWeeks * 7) : allDays;
+const total = days.reduce((sum, d) => sum + d.count, 0);
+
+const CELL = 10;
+const GAP = 2;
+const STEP = CELL + GAP;
+const LEFT = 30;
+const TOP = 18;
+
+const first = new Date(days[0].date + 'T00:00:00Z');
+const offset = first.getUTCDay(); // 0 = Sunday, GitHub's first row
+const weeks = Math.ceil((days.length + offset) / 7);
+const width = LEFT + weeks * STEP;
+const height = TOP + 7 * STEP;
+
+const counts = allDays.map((d) => d.count).filter((c) => c > 0).sort((a, b) => a - b);
+const q = (p: number) => counts[Math.min(counts.length - 1, Math.floor(p * counts.length))] ?? 1;
+const cuts = [q(0.25), q(0.5), q(0.75)];
+const level = (c: number) => (c === 0 ? 0 : c <= cuts[0] ? 1 : c <= cuts[1] ? 2 : c <= cuts[2] ? 3 : 4);
+const fills = ['var(--n3)', 'var(--n5)', 'var(--n7)', 'var(--n9)', 'var(--n10)'];
+
+const cells = days.map((d, i) => {
+  const idx = i + offset;
+  return { x: LEFT + Math.floor(idx / 7) * STEP, y: TOP + (idx % 7) * STEP, level: level(d.count), d };
+});
+
+const months: { x: number; label: string }[] = [];
+let lastMonth = -1;
+days.forEach((d, i) => {
+  const dt = new Date(d.date + 'T00:00:00Z');
+  if (dt.getUTCDate() <= 7 && dt.getUTCMonth() !== lastMonth && dt.getUTCDay() === 0) {
+    lastMonth = dt.getUTCMonth();
+    months.push({ x: LEFT + Math.floor((i + offset) / 7) * STEP, label: dt.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' }) });
+  }
+});
+
+const byMonth = new Map<string, number>();
+days.forEach((d) => byMonth.set(d.date.slice(0, 7), (byMonth.get(d.date.slice(0, 7)) ?? 0) + d.count));
+const [busiestKey, busiestCount] = [...byMonth.entries()].sort((a, b) => b[1] - a[1])[0];
+const busiest = new Date(busiestKey + '-01T00:00:00Z').toLocaleString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+const fmt = (s: string) => new Date(s + 'T00:00:00Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+const summary = `${total} GitHub contributions from ${fmt(days[0].date)} to ${fmt(days[days.length - 1].date)}. Busiest month: ${busiest}, with ${busiestCount}.`;
+---
+
+<figure class="plot">
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={summary}>
+    {months.map((m) => <text x={m.x} y="10" class="axis">{m.label}</text>)}
+    <text x="0" y={TOP + 1 * STEP + 9} class="axis">Mon</text>
+    <text x="0" y={TOP + 3 * STEP + 9} class="axis">Wed</text>
+    <text x="0" y={TOP + 5 * STEP + 9} class="axis">Fri</text>
+    {cells.map((c) => <rect x={c.x} y={c.y} width={CELL} height={CELL} rx="2" fill={fills[c.level]}><title>{`${c.d.count} on ${fmt(c.d.date)}`}</title></rect>)}
+  </svg>
+  <figcaption>
+    <span>{summary}</span>
+    <span class="legend" aria-hidden="true">
+      Less
+      {fills.map((f) => <span class="swatch" style={`background:${f}`}></span>)}
+      More
+    </span>
+  </figcaption>
+</figure>
+
+<style>
+  .plot svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .axis {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: var(--ink-2);
+  }
+
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin-top: 12px;
+    font-size: var(--text-xs);
+    color: var(--ink-2);
+  }
+
+  .legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+  }
+
+  .swatch {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+</style>

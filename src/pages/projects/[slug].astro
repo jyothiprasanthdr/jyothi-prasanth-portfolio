@@ -1,0 +1,134 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { publicProjects } from '../../lib/projects';
+
+export async function getStaticPaths() {
+  const projects = await publicProjects();
+  return projects.map((p) => ({ params: { slug: p.id }, props: { project: p } }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Base
+  title={`${project.data.title} · Jyothi Prasanth D R`}
+  description={project.data.summary}
+  crumb={[{ label: 'projects', href: '/#projects' }, { label: project.data.title }]}
+>
+  <article class="project-page">
+    <a class="back" href="/#projects"><Icon name="arrowLeft" size={14} /> All projects</a>
+    <h1>{project.data.title}</h1>
+    <p class="summary">{project.data.summary}</p>
+
+    <dl class="facts">
+      <div>
+        <dt>Stack</dt>
+        <dd>{project.data.stack.join(', ')}</dd>
+      </div>
+      <div>
+        <dt>Started</dt>
+        <dd class="mono">{project.data.started}</dd>
+      </div>
+    </dl>
+
+    <a class="btn btn-primary" href={project.data.repo} target="_blank" rel="noopener">
+      View repo <Icon name="arrowUpRight" size={14} /><span class="visually-hidden"> (opens in new tab)</span>
+    </a>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .project-page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-sm);
+    color: var(--ink-2);
+  }
+
+  h1 {
+    margin-top: 20px;
+    font-size: var(--text-2xl);
+  }
+
+  .summary {
+    margin-top: 12px;
+    font-size: var(--text-md);
+    color: var(--n9);
+  }
+
+  .facts {
+    display: grid;
+    gap: 8px;
+    margin: 28px 0;
+    padding: 16px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .facts div {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    font-size: var(--text-sm);
+  }
+
+  .facts dt {
+    color: var(--ink-2);
+  }
+
+  .prose {
+    margin-top: 40px;
+    max-width: 65ch;
+  }
+
+  .prose :global(h2) {
+    font-size: var(--text-lg);
+    margin: 36px 0 12px;
+  }
+
+  .prose :global(p),
+  .prose :global(li) {
+    color: var(--n9);
+  }
+
+  .prose :global(p + p) {
+    margin-top: 12px;
+  }
+
+  .prose :global(ol),
+  .prose :global(ul) {
+    padding-left: 22px;
+    display: grid;
+    gap: 6px;
+  }
+
+  .prose :global(code) {
+    font-size: 0.86em;
+    padding: 1px 5px;
+    background: var(--code-bg);
+    border-radius: var(--radius-sm);
+  }
+
+  @media (max-width: 859px) {
+    .project-page {
+      padding: 20px 16px 0;
+    }
+  }
+</style>

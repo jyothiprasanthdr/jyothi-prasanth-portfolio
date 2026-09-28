@@ -1,0 +1,60 @@
+---
+import type { Notebook } from '../lib/notes';
+
+interface Props {
+  nb: Notebook;
+  eager?: boolean;
+}
+const { nb, eager = false } = Astro.props;
+---
+
+<a class="notebook-card" href={`/notes/${nb.slug}`}>
+  <img
+    src={nb.shelf}
+    alt={`A handwritten page from the ${nb.title} notebook`}
+    width="440"
+    height={Math.round((440 * nb.height) / nb.width)}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding="async"
+  />
+  <span class="nb-title">{nb.title}</span>
+  <span class="nb-meta">{nb.category} · {nb.pages} pages</span>
+</a>
+
+<style>
+  .notebook-card {
+    display: grid;
+    gap: 6px;
+    text-decoration: none;
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 1100 / 1420;
+    object-fit: cover;
+    object-position: top;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    transition: border-color 150ms ease;
+  }
+
+  .nb-title {
+    margin-top: 4px;
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  .nb-meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .notebook-card:hover img {
+      border-color: var(--ink);
+    }
+  }
+</style>

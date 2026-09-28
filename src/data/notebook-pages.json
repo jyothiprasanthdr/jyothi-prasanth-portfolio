@@ -1,0 +1,142 @@
+{
+  "cloud-aws": {
+    "pages": 34,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 3,
+    "firstPage": 2
+  },
+  "airflow": {
+    "pages": 5,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 2,
+    "firstPage": 2
+  },
+  "kubernetes": {
+    "pages": 19,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 2,
+    "firstPage": 2
+  },
+  "docker": {
+    "pages": 4,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 2,
+    "firstPage": 2
+  },
+  "prompt-engineering": {
+    "pages": 5,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 4,
+    "firstPage": 2
+  },
+  "parameter-efficient-fine-tuning": {
+    "pages": 31,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 4,
+    "firstPage": 3
+  },
+  "langgraph": {
+    "pages": 17,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 3,
+    "firstPage": 3
+  },
+  "langchain-detailed": {
+    "pages": 14,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 3,
+    "firstPage": 2
+  },
+  "transformer": {
+    "pages": 9,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 4,
+    "firstPage": 2
+  },
+  "rag": {
+    "pages": 19,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 4,
+    "firstPage": 2
+  },
+  "mcp-model-context-protocol": {
+    "pages": 5,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 4,
+    "firstPage": 2
+  },
+  "redteaming": {
+    "pages": 6,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 3,
+    "firstPage": 2
+  },
+  "chunking-techniques-for-rag": {
+    "pages": 5,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 4,
+    "firstPage": 2
+  },
+  "optimizers-and-loss-functions": {
+    "pages": 10,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 3,
+    "firstPage": 2
+  },
+  "introduction-and-concepts-in-nn": {
+    "pages": 4,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 3,
+    "firstPage": 2
+  },
+  "weight-initialization": {
+    "pages": 6,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 3,
+    "firstPage": 2
+  },
+  "learning-rate-schedulers": {
+    "pages": 5,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 4,
+    "firstPage": 2
+  },
+  "cnn": {
+    "pages": 8,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 3,
+    "firstPage": 2
+  },
+  "rnn": {
+    "pages": 9,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 2,
+    "firstPage": 2
+  },
+  "activation-functions": {
+    "pages": 8,
+    "width": 1100,
+    "height": 1420,
+    "shelfPage": 2,
+    "firstPage": 2
+  }
+}

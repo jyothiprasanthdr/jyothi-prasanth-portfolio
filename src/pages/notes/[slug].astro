@@ -1,0 +1,187 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { notebooks, pageUrl, type Notebook } from '../../lib/notes';
+
+export function getStaticPaths() {
+  return notebooks.map((nb, i) => ({
+    params: { slug: nb.slug },
+    props: { nb, prev: notebooks[i - 1], next: notebooks[i + 1] },
+  }));
+}
+
+interface Props {
+  nb: Notebook;
+  prev?: Notebook;
+  next?: Notebook;
+}
+const { nb, prev, next } = Astro.props;
+// Open on the first written page; the notebook's cover page(s) stay in the PDF.
+const pages = Array.from({ length: nb.pages - nb.firstPage + 1 }, (_, i) => nb.firstPage + i);
+const pdfName = decodeURI(nb.pdf).split('/').pop();
+---
+
+<Base
+  title={`${nb.title} · Handwritten notebook · Jyothi Prasanth D R`}
+  description={`A ${nb.pages}-page handwritten notebook on ${nb.title} (${nb.category}).`}
+  crumb={[{ label: 'notes', href: '/notes' }, { label: nb.title }]}
+>
+  <article class="reader">
+    <header class="reader-head">
+      <a class="back" href="/notes"><Icon name="arrowLeft" size={14} /> All notebooks</a>
+      <h1>{nb.title}</h1>
+      <p class="meta">{nb.category} · {nb.pages} pages</p>
+      <div class="reader-actions">
+        <a class="btn btn-primary" href={nb.pdf} download={pdfName}>
+          <Icon name="download" size={15} /> Download PDF
+        </a>
+        <a class="btn btn-secondary" href={nb.pdf} target="_blank" rel="noopener">
+          <Icon name="filePdf" size={15} /> Open PDF<span class="visually-hidden"> (opens in new tab)</span>
+        </a>
+      </div>
+      <p class="note">These pages are handwritten, so the text is not selectable. The PDF has the same pages plus the notebook cover.</p>
+    </header>
+
+    <ol class="pages" role="list">
+      {
+        pages.map((n) => (
+          <li>
+            <figure>
+              <img
+                src={pageUrl(nb.slug, n)}
+                alt={`Handwritten page ${n} of ${nb.pages}, ${nb.title}`}
+                width={nb.width}
+                height={nb.height}
+                loading={n <= nb.firstPage + 1 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+              <figcaption class="mono">
+                {n} / {nb.pages}
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ol>
+
+    <nav class="pager" aria-label="Other notebooks">
+      {
+        prev ? (
+          <a href={`/notes/${prev.slug}`}>
+            <span class="pager-dir">Previous</span>
+            {prev.title}
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next && (
+          <a class="pager-next" href={`/notes/${next.slug}`}>
+            <span class="pager-dir">Next</span>
+            {next.title}
+          </a>
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .reader {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-sm);
+    color: var(--ink-2);
+  }
+
+  .reader-head h1 {
+    margin-top: 20px;
+    font-size: var(--text-2xl);
+  }
+
+  .meta {
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-2);
+  }
+
+  .reader-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .note {
+    margin-top: 16px;
+    font-size: var(--text-sm);
+    color: var(--ink-2);
+  }
+
+  .pages {
+    list-style: none;
+    padding: 0;
+    margin-top: 40px;
+    display: grid;
+    gap: 32px;
+  }
+
+  .pages img {
+    width: 100%;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+  }
+
+  .pages figcaption {
+    margin-top: 8px;
+    text-align: center;
+    font-size: var(--text-xs);
+    color: var(--ink-2);
+  }
+
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .pager a {
+    display: grid;
+    gap: 2px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .pager-next {
+    text-align: right;
+  }
+
+  .pager-dir {
+    font-size: var(--text-xs);
+    font-weight: 400;
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 859px) {
+    .reader {
+      padding: 20px 16px 0;
+    }
+
+    .pages {
+      gap: 20px;
+    }
+  }
+</style>

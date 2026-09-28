@@ -1,16 +1,34 @@
-# React + Vite
+# jyothi-prasanth.ipynb
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal site of Jyothi Prasanth D R, AI engineer. Built with Astro as a static site, designed as a notebook you run: every section is a cell.
 
-Currently, two official plugins are available:
+## Commands
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Command | What it does |
+|---|---|
+| `npm run dev` | Local dev server at http://localhost:4321 |
+| `npm run build` | Static build into `dist/` |
+| `npm run preview` | Serve the built site |
+| `npm run stats` | Fetch LeetCode + GitHub numbers into `src/data/stats.json` (run before a deploy build) |
+| `npm run notes:sync` | Pull new Noteful PDF exports into `public/notes/` and update the manifest |
+| `npm run notes:render` | Render notebook PDFs to page images (macOS only: uses PDFKit via Swift, plus `cwebp`) |
 
-## React Compiler
+## Where things live
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- `src/data/profile.ts`: name, intro line, links, availability.
+- `src/data/resume.ts`: experience, education, tools. **`showEmployerDetail` is `false`**. Employer bullets are kept in the file but not published until it is set to `true`.
+- `src/content/projects/*.md`: public projects. Only state what the repo supports.
+- `public/notes/` + `public/notes-manifest.json`: the notebook PDFs. `public/notebook-pages/`: rendered pages (committed, so CI never needs macOS).
+- `src/data/stats.json`: generated. If a fetch fails, the last good data is kept and marked stale. Nothing is invented.
 
-## Expanding the Oxlint configuration
+## Rules the design depends on
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- Code cells only show real source, via `// #region <name>` blocks read at build time (`src/lib/source.ts`).
+- One accent (signal yellow) that means "running / active" only, and always carries ink text.
+- No photo of the owner, including in social preview images.
+
+## Resume PDF
+
+Put the PDF at `public/Jyothi_Prasanth_Resume.pdf`. The Download PDF button on `/resume` appears automatically once the file exists.
+
+Design direction and product context: `PORTFOLIO_SPEC.md`, `PRODUCT.md`, `DESIGN.md`.

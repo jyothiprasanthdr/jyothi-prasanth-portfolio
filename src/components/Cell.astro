@@ -1,0 +1,287 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+  kind: 'markdown' | 'code';
+  /** Code cells: execution count, shown as In [n]: / Out[n]: like Jupyter. */
+  n?: number;
+  /** Markdown cells that open a section: the section number (matches the contents rail). */
+  section?: number;
+  /** Rail label; present only on cells that open a section. */
+  toc?: string;
+  /** Markdown cells: the raw line shown before the cell renders. Must match the rendered heading. */
+  source?: string;
+  /** Code cells: real source code from this repo (see src/lib/source.ts). */
+  input?: string;
+  inputLabel?: string;
+}
+const { id, kind, n, section, toc, source, input, inputLabel } = Astro.props;
+---
+
+<section
+  class:list={['cell', `cell-${kind}`]}
+  id={id}
+  data-cell
+  data-kind={kind}
+  data-count={n}
+  data-toc={toc}
+  tabindex="-1"
+>
+  <div class="prompt" aria-hidden="true">
+    {kind === 'code' && <span data-prompt>In [{n}]:</span>}
+    {section && <span class="section-no">{section}</span>}
+  </div>
+
+  {
+    kind === 'code' && (
+      <div class="cell-input">
+        {inputLabel && <p class="input-label">{inputLabel}</p>}
+        <pre><code>{input}</code></pre>
+      </div>
+    )
+  }
+
+  {
+    kind === 'code' && (
+      <div class="prompt prompt-out" aria-hidden="true">
+        <span>Out[{n}]:</span>
+      </div>
+    )
+  }
+
+  <div class="cell-stack">
+    {source && <pre class="cell-source" aria-hidden="true">{source}</pre>}
+    <div class="cell-output" data-output>
+      <slot />
+    </div>
+  </div>
+
+  {
+    toc && (
+      <button class="cell-link" type="button" data-cell-link={id} aria-label={`Copy link to the ${toc} section`}>
+        <span class="i-link"><Icon name="link" size={15} /></span>
+        <span class="i-check"><Icon name="check" size={15} /></span>
+      </button>
+    )
+  }
+</section>
+
+<style>
+  .cell {
+    position: relative;
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: 16px;
+    padding: 12px 0;
+    scroll-margin-top: calc(var(--toolbar-h) + 16px);
+  }
+
+  .cell[data-toc]:not(:first-child) {
+    margin-top: 40px;
+  }
+
+  .cell:focus {
+    outline: none;
+  }
+
+  .cell:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 4px;
+    border-radius: var(--radius-md);
+  }
+
+  .prompt {
+    padding-top: 14px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    transition: color 120ms ease;
+  }
+
+  .cell-markdown .prompt {
+    padding-top: 8px;
+  }
+
+  .prompt-out {
+    padding-top: 18px;
+  }
+
+  /* The current section's number becomes the running/active chip (ink on signal). */
+  :global(.cell[data-current]) .section-no {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: var(--radius-sm);
+    background: var(--signal);
+    color: var(--ink);
+  }
+
+  .cell-input {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    padding: 12px 16px 14px;
+    overflow-x: auto;
+  }
+
+  .input-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-2);
+    margin-bottom: 6px;
+  }
+
+  .cell-input pre {
+    font-size: 0.84rem;
+    line-height: 1.6;
+    color: var(--n9);
+    tab-size: 2;
+  }
+
+  .cell-code .cell-stack {
+    margin-top: 16px;
+  }
+
+  /* Source and output share one grid area, so rendering a cell never moves the page. */
+  .cell-stack {
+    display: grid;
+    min-width: 0;
+  }
+
+  .cell-stack > * {
+    grid-area: 1 / 1;
+    min-width: 0;
+  }
+
+  .cell-source {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--ink-2);
+    white-space: pre-wrap;
+    padding-top: 4px;
+  }
+
+  /* ---------- Run-all states (only while html[data-run] is set) ---------- */
+  :global(html[data-run]) .cell-source {
+    display: block;
+  }
+
+  :global(html[data-run]) .cell-output,
+  :global(html[data-run]) .prompt-out {
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 180ms var(--ease-out);
+  }
+
+  :global(html[data-run]) .cell:not([data-state='done']) .cell-output,
+  :global(html[data-run]) .cell:not([data-state='done']) .prompt-out {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  /* Source disappears instantly while the output fades in: a crossfade would show both texts at once. */
+  :global(html[data-run]) .cell[data-state='done'] .cell-source {
+    visibility: hidden;
+  }
+
+  /* Reduced motion keeps the fade (it aids comprehension) and drops the movement. */
+  @media (prefers-reduced-motion: reduce) {
+    :global(html[data-run]) .cell:not([data-state='done']) .cell-output,
+    :global(html[data-run]) .cell:not([data-state='done']) .prompt-out {
+      transform: none;
+    }
+  }
+
+  /* ---------- Pointer tracking: the cell under the cursor wakes up, like JupyterLab ---------- */
+  .cell-link {
+    position: absolute;
+    top: 12px;
+    right: 0;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--ink-2);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 120ms ease, color 120ms ease;
+  }
+
+  .cell-link .i-check,
+  .cell-link[data-copied] .i-link {
+    display: none;
+  }
+
+  .cell-link[data-copied] .i-check {
+    display: contents;
+  }
+
+  .cell-link:focus-visible,
+  .cell-link[data-copied],
+  .cell:focus-within .cell-link {
+    opacity: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .cell:hover .prompt {
+      color: var(--ink);
+    }
+
+    .cell:hover .cell-link {
+      opacity: 1;
+    }
+
+    .cell-link:hover {
+      color: var(--ink);
+    }
+  }
+
+  @media (max-width: 859px) {
+    .cell {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 4px;
+      padding: 16px 0;
+    }
+
+    .cell[data-toc]:not(:first-child) {
+      margin-top: 24px;
+    }
+
+    .prompt,
+    .cell-markdown .prompt,
+    .prompt-out {
+      text-align: left;
+      padding-top: 0;
+    }
+
+    .cell-code .cell-stack {
+      margin-top: 0;
+    }
+
+    .prompt-out {
+      margin-top: 12px;
+    }
+
+    /* Wrap code instead of scrolling sideways on phones. */
+    .cell-input {
+      overflow-x: visible;
+    }
+
+    .cell-input pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .cell-link {
+      display: none;
+    }
+  }
+</style>

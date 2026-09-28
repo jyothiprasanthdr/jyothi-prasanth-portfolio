@@ -1,0 +1,29 @@
+---
+import arrowLeft from '@phosphor-icons/core/assets/regular/arrow-left.svg?raw';
+import arrowRight from '@phosphor-icons/core/assets/regular/arrow-right.svg?raw';
+import arrowUpRight from '@phosphor-icons/core/assets/regular/arrow-up-right.svg?raw';
+import caretDown from '@phosphor-icons/core/assets/regular/caret-down.svg?raw';
+import check from '@phosphor-icons/core/assets/regular/check.svg?raw';
+import copy from '@phosphor-icons/core/assets/regular/copy.svg?raw';
+import download from '@phosphor-icons/core/assets/regular/download-simple.svg?raw';
+import filePdf from '@phosphor-icons/core/assets/regular/file-pdf.svg?raw';
+import keyboard from '@phosphor-icons/core/assets/regular/keyboard.svg?raw';
+import link from '@phosphor-icons/core/assets/regular/link.svg?raw';
+import list from '@phosphor-icons/core/assets/regular/list.svg?raw';
+import search from '@phosphor-icons/core/assets/regular/magnifying-glass.svg?raw';
+import play from '@phosphor-icons/core/assets/regular/play.svg?raw';
+import x from '@phosphor-icons/core/assets/regular/x.svg?raw';
+
+const icons = { arrowLeft, arrowRight, arrowUpRight, caretDown, check, copy, download, filePdf, keyboard, link, list, search, play, x };
+
+interface Props {
+  name: keyof typeof icons;
+  size?: number;
+}
+const { name, size = 16 } = Astro.props;
+const svg = icons[name]
+  .replace('<svg', `<svg width="${size}" height="${size}" aria-hidden="true" focusable="false" class="icon"`)
+  .replace(/fill="#000000"|fill="currentColor"/g, 'fill="currentColor"');
+---
+
+<Fragment set:html={svg} />

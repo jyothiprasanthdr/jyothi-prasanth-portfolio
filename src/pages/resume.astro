@@ -1,0 +1,299 @@
+---
+import { existsSync } from 'node:fs';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { profile } from '../data/profile';
+import { experience, education, tools, showEmployerDetail } from '../data/resume';
+import { publicProjects } from '../lib/projects';
+import { notebooks } from '../lib/notes';
+
+const projects = await publicProjects();
+// The download only appears once the PDF is actually in public/.
+const hasPdf = existsSync(`public${profile.resumePdf}`);
+---
+
+<Base
+  title="Resume · Jyothi Prasanth D R"
+  description="Resume of Jyothi Prasanth D R, AI engineer in the Bay Area."
+  crumb={[{ label: 'resume' }]}
+>
+  <article class="resume">
+    <header class="resume-head">
+      <div>
+        <h1>{profile.name}</h1>
+        <p class="role">{profile.role} · {profile.location}</p>
+        <p class="contact">
+          <a href={`mailto:${profile.email}`}>{profile.email}</a>
+          <a href={profile.links.linkedin}>linkedin.com/in/prasanthd09898</a>
+          <a href={profile.links.github}>github.com/jyothiprasanthdr</a>
+        </p>
+      </div>
+      <div class="resume-actions">
+        {
+          hasPdf && (
+            <a class="btn btn-primary" href={profile.resumePdf} download>
+              <Icon name="download" size={15} /> Download PDF
+            </a>
+          )
+        }
+        <button class="btn btn-secondary" type="button" data-print>Print</button>
+      </div>
+    </header>
+
+    <section aria-labelledby="exp">
+      <h2 id="exp">Experience</h2>
+      <ol class="entries" role="list">
+        {
+          experience.map((r) => (
+            <li class="entry">
+              <div class="entry-head">
+                <h3>{r.role}</h3>
+                <span class="dates mono">{r.period}</span>
+              </div>
+              <p class="org">
+                {r.company} · {r.location}
+              </p>
+              {showEmployerDetail && (
+                <ul class="bullets">
+                  {r.bullets.map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section aria-labelledby="proj">
+      <h2 id="proj">Public projects</h2>
+      <ol class="entries" role="list">
+        {
+          projects.map((p) => (
+            <li class="entry">
+              <div class="entry-head">
+                <h3>
+                  <a href={`/projects/${p.id}`}>{p.data.title}</a>
+                </h3>
+                <span class="dates mono">{p.data.started}</span>
+              </div>
+              <p class="org">{p.data.summary}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section aria-labelledby="edu">
+      <h2 id="edu">Education</h2>
+      <ol class="entries" role="list">
+        {
+          education.map((e) => (
+            <li class="entry">
+              <div class="entry-head">
+                <h3>{e.degree}</h3>
+                <span class="dates mono">{e.period}</span>
+              </div>
+              <p class="org">
+                {e.school} · {e.location}
+              </p>
+              <p class="note">{e.note}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section aria-labelledby="tools">
+      <h2 id="tools">Tools</h2>
+      <dl class="tools">
+        {
+          tools.map((t) => (
+            <div>
+              <dt>{t.group}</dt>
+              <dd>{t.items.join(', ')}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section aria-labelledby="notes">
+      <h2 id="notes">Notebooks</h2>
+      <p class="org">
+        {notebooks.length} handwritten study notebooks on Gen AI, deep learning, and MLOps.{' '}
+        <a href="/notes">Read them online</a>.
+      </p>
+    </section>
+  </article>
+</Base>
+
+<script>
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  .resume {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 0;
+  }
+
+  .resume-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--rule-strong);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .role {
+    margin-top: 6px;
+    font-size: var(--text-md);
+    color: var(--n9);
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin-top: 10px;
+    font-size: var(--text-sm);
+  }
+
+  .resume-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  section {
+    margin-top: 36px;
+  }
+
+  h2 {
+    font-size: var(--text-md);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .entries {
+    list-style: none;
+    padding: 0;
+  }
+
+  .entry {
+    padding: 16px 0 4px;
+  }
+
+  .entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 4px 16px;
+  }
+
+  h3 {
+    font-size: var(--text-base);
+    letter-spacing: -0.01em;
+  }
+
+  h3 a {
+    text-decoration: none;
+  }
+
+  .dates {
+    font-size: var(--text-xs);
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+
+  .org {
+    margin-top: 2px;
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  section > .org {
+    margin-top: 14px;
+  }
+
+  .note {
+    margin-top: 4px;
+    font-size: var(--text-sm);
+    color: var(--ink-2);
+  }
+
+  .bullets {
+    margin-top: 8px;
+    padding-left: 18px;
+    font-size: var(--text-sm);
+    color: var(--n9);
+  }
+
+  .tools {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .tools div {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    font-size: var(--text-sm);
+  }
+
+  .tools dt {
+    font-weight: 500;
+  }
+
+  .tools dd {
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 859px) {
+    .resume {
+      padding: 24px 16px 0;
+    }
+
+    .tools div {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+
+  @media print {
+    :global(.toolbar),
+    :global(.site-footer),
+    :global(.skip-link),
+    .resume-actions {
+      display: none !important;
+    }
+
+    :global(body) {
+      background: #fff;
+      color: #000;
+      font-size: 10.5pt;
+    }
+
+    .resume {
+      max-width: none;
+      padding: 0;
+    }
+
+    .entry {
+      break-inside: avoid;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+</style>

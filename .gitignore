@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.astro/
+
+# impeccable decision-page server logs
+.impeccable/questions/

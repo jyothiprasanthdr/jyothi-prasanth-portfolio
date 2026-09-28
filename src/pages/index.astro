@@ -1,0 +1,586 @@
+---
+import Base from '../layouts/Base.astro';
+import Cell from '../components/Cell.astro';
+import Rail from '../components/Rail.astro';
+import Icon from '../components/Icon.astro';
+import ContributionPlot from '../components/ContributionPlot.astro';
+import NotebookCard from '../components/NotebookCard.astro';
+import { profile } from '../data/profile';
+import { experience, education, tools, showEmployerDetail } from '../data/resume';
+import { notebooks, recentNotebooks } from '../lib/notes';
+import { publicProjects } from '../lib/projects';
+import { region } from '../lib/source';
+import stats from '../data/stats.json';
+import notesSource from '../lib/notes.ts?raw';
+import projectsSource from '../lib/projects.ts?raw';
+import statsSource from '../../scripts/fetch-stats.mjs?raw';
+
+const shelf = recentNotebooks(6);
+const projects = await publicProjects();
+
+const railItems = [
+  { n: 1, id: 'about', label: 'About' },
+  { n: 2, id: 'notebooks', label: 'Handwritten notebooks' },
+  { n: 3, id: 'projects', label: 'Projects' },
+  { n: 4, id: 'experience', label: 'Experience' },
+  { n: 5, id: 'practice', label: 'Practice' },
+  { n: 6, id: 'contact', label: 'Contact' },
+];
+
+const fetchedOn = stats.fetchedAt
+  ? new Date(stats.fetchedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  : null;
+const stdout =
+  stats.leetcode && stats.github
+    ? [
+        `LeetCode  ${stats.leetcode.solved} solved (${stats.leetcode.easy} easy, ${stats.leetcode.medium} medium, ${stats.leetcode.hard} hard)`,
+        `GitHub    ${stats.github.total} contributions in the last 12 months`,
+        `fetched   ${fetchedOn}`,
+      ].join('\n')
+    : '';
+---
+
+<Base
+  title="Jyothi Prasanth D R · AI Engineer"
+  description="AI engineer in the Bay Area building agent and retrieval systems. Handwritten notebooks, public projects, and resume."
+  home
+>
+  <div class="visually-hidden" aria-live="polite" data-live></div>
+  <div class="notebook">
+    <Rail items={railItems} />
+
+    <div class="cells">
+      <Cell section={1} id="about" kind="markdown" toc="About" source={`# ${profile.name}`}>
+        <h1 class="name">{profile.name}</h1>
+        <p class="intro">{profile.intro}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="/resume">Resume</a>
+          <a class="btn btn-secondary" href={`mailto:${profile.email}`}>Email me</a>
+        </div>
+      </Cell>
+
+      <Cell section={2} id="notebooks" kind="markdown" toc="Handwritten notebooks" source="## Handwritten notebooks">
+        <h2 class="section-title">Handwritten notebooks</h2>
+        <p class="lede">
+          {notebooks.length} notebooks I wrote by hand while learning the systems I build: transformers, RAG, LangGraph,
+          fine-tuning, and MLOps.
+        </p>
+      </Cell>
+
+      <Cell n={1} id="notebooks-shelf" kind="code" input={region(notesSource, 'shelf')} inputLabel="src/lib/notes.ts">
+        <ul class="shelf" role="list">
+          {
+            shelf.map((nb) => (
+              <li>
+                <NotebookCard nb={nb} />
+              </li>
+            ))
+          }
+        </ul>
+        <a class="more" href="/notes">
+          Open all {notebooks.length} notebooks <Icon name="arrowRight" size={14} />
+        </a>
+      </Cell>
+
+      <Cell section={3} id="projects" kind="markdown" toc="Projects" source="## Projects">
+        <h2 class="section-title">Projects</h2>
+        <p class="lede">Public work on GitHub. Each one links to its repository.</p>
+      </Cell>
+
+      <Cell n={2} id="projects-list" kind="code" input={region(projectsSource, 'projects')} inputLabel="src/lib/projects.ts">
+        <ul class="projects" role="list">
+          {
+            projects.map((p) => (
+              <li class="project">
+                <h3>
+                  <a href={`/projects/${p.id}`}>{p.data.title}</a>
+                </h3>
+                <p>{p.data.summary}</p>
+                <div class="project-actions">
+                  <a class="btn btn-secondary" href={p.data.repo} target="_blank" rel="noopener">
+                    View repo <Icon name="arrowUpRight" size={14} />
+                    <span class="visually-hidden">(opens in new tab)</span>
+                  </a>
+                  <button
+                    class="btn btn-quiet details-toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-controls={`details-${p.id}`}
+                    data-expander
+                  >
+                    Details <Icon name="caretDown" size={14} />
+                  </button>
+                </div>
+                <div class="expander" id={`details-${p.id}`} data-open="false">
+                  <div class="expander-inner">
+                    <dl class="facts">
+                      <div>
+                        <dt>Stack</dt>
+                        <dd>{p.data.stack.join(', ')}</dd>
+                      </div>
+                      <div>
+                        <dt>Started</dt>
+                        <dd class="mono">{p.data.started}</dd>
+                      </div>
+                      <div>
+                        <dt>Write-up</dt>
+                        <dd>
+                          <a href={`/projects/${p.id}`}>How it is built</a>
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </Cell>
+
+      <Cell section={4} id="experience" kind="markdown" toc="Experience" source="## Experience">
+        <h2 class="section-title">Experience</h2>
+        <table class="frame">
+          <caption class="visually-hidden">Work experience</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="idx" aria-hidden="true"></th>
+              <th scope="col">Role</th>
+              <th scope="col">Company</th>
+              <th scope="col" class="col-location">Location</th>
+              <th scope="col">Dates</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              experience.map((r, i) => (
+                <>
+                  <tr>
+                    <td class="idx mono" aria-hidden="true">{i}</td>
+                    <th scope="row">{r.role}</th>
+                    <td>{r.company}</td>
+                    <td class="col-location">{r.location}</td>
+                    <td class="mono">{r.period}</td>
+                  </tr>
+                  {showEmployerDetail && (
+                    <tr class="bullets-row">
+                      <td class="idx" aria-hidden="true" />
+                      <td colspan="4">
+                        <ul>{r.bullets.map((b) => <li>{b}</li>)}</ul>
+                      </td>
+                    </tr>
+                  )}
+                </>
+              ))
+            }
+          </tbody>
+        </table>
+
+        <h3 class="subhead">Education</h3>
+        <table class="frame">
+          <caption class="visually-hidden">Education</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="idx" aria-hidden="true"></th>
+              <th scope="col">Degree</th>
+              <th scope="col">School</th>
+              <th scope="col">Dates</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              education.map((e, i) => (
+                <tr>
+                  <td class="idx mono" aria-hidden="true">{i}</td>
+                  <th scope="row">{e.degree}</th>
+                  <td>{e.school}</td>
+                  <td class="mono">{e.period}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+
+        <h3 class="subhead">Tools</h3>
+        <dl class="tools">
+          {
+            tools.map((t) => (
+              <div>
+                <dt>{t.group}</dt>
+                <dd>{t.items.join(', ')}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </Cell>
+
+      <Cell section={5} id="practice" kind="markdown" toc="Practice" source="## Practice">
+        <h2 class="section-title">Practice</h2>
+        <p class="lede">Pulled from LeetCode and GitHub each time this site builds.</p>
+      </Cell>
+
+      <Cell n={3} id="practice-data" kind="code" input={region(statsSource, 'cell')} inputLabel="scripts/fetch-stats.mjs">
+        {
+          stats.leetcode && stats.github ? (
+            <div class="practice">
+              {stats.stale && (
+                <p class="stderr mono">The last fetch failed. Showing data from {fetchedOn}.</p>
+              )}
+              <pre class="stdout mono">{stdout}</pre>
+              <div class="plot-year">
+                <ContributionPlot days={stats.github.days} />
+              </div>
+              <div class="plot-half">
+                <ContributionPlot days={stats.github.days} lastWeeks={26} />
+              </div>
+              <p class="practice-links">
+                <a href={profile.links.leetcode} target="_blank" rel="noopener">
+                  LeetCode profile<span class="visually-hidden"> (opens in new tab)</span>
+                </a>
+                <a href={profile.links.github} target="_blank" rel="noopener">
+                  GitHub profile<span class="visually-hidden"> (opens in new tab)</span>
+                </a>
+              </p>
+            </div>
+          ) : (
+            <p class="stderr mono">Stats could not be fetched for this build.</p>
+          )
+        }
+      </Cell>
+
+      <Cell section={6} id="contact" kind="markdown" toc="Contact" source="## Contact">
+        <h2 class="section-title">Contact</h2>
+        <p class="lede">Hiring for AI engineering work? Email me.</p>
+        <div class="email-row">
+          <a class="email mono" href={`mailto:${profile.email}`} data-email>{profile.email}</a>
+          <button class="btn btn-secondary" type="button" data-copy={profile.email}>
+            <span data-copy-icon><Icon name="copy" size={15} /></span>
+            <span data-copy-label>Copy</span>
+          </button>
+          <span class="visually-hidden" aria-live="polite" data-copy-status></span>
+        </div>
+        <p class="elsewhere">
+          <a href={profile.links.linkedin} target="_blank" rel="noopener">
+            LinkedIn<span class="visually-hidden"> (opens in new tab)</span>
+          </a>
+          <a href={profile.links.github} target="_blank" rel="noopener">
+            GitHub<span class="visually-hidden"> (opens in new tab)</span>
+          </a>
+        </p>
+      </Cell>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import '../scripts/notebook.ts';
+</script>
+
+<style>
+  .notebook {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 32px 24px 0;
+    display: grid;
+    grid-template-columns: 200px minmax(0, 800px);
+    column-gap: 40px;
+  }
+
+  .cells {
+    min-width: 0;
+  }
+
+  .name {
+    font-size: var(--text-hero);
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    padding-top: 4px;
+  }
+
+  .intro {
+    margin-top: 16px;
+    max-width: 34ch;
+    font-size: var(--text-lg);
+    line-height: 1.45;
+    color: var(--n9);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+    padding-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: var(--text-xl);
+    padding-top: 2px;
+  }
+
+  .lede {
+    margin-top: 8px;
+    max-width: 62ch;
+    color: var(--ink-2);
+  }
+
+  /* ---------- Notebook shelf ---------- */
+  .shelf {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px 20px;
+  }
+
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 24px;
+    font-weight: 500;
+  }
+
+  /* ---------- Projects ---------- */
+  .projects {
+    list-style: none;
+    padding: 0;
+    display: grid;
+  }
+
+  .project {
+    padding: 20px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .project:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .project h3 {
+    font-size: var(--text-lg);
+  }
+
+  .project h3 a {
+    text-decoration: none;
+  }
+
+  .project p {
+    margin-top: 6px;
+    max-width: 62ch;
+    color: var(--n9);
+  }
+
+  .project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .details-toggle :global(.icon) {
+    transition: transform 200ms var(--ease-in-out);
+  }
+
+  .details-toggle[aria-expanded='true'] :global(.icon) {
+    transform: rotate(180deg);
+  }
+
+  /* Front and back: the back opens by animating grid rows, no height measuring. */
+  .expander {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 160ms var(--ease-out);
+  }
+
+  .expander[data-open='true'] {
+    grid-template-rows: 1fr;
+    transition-duration: 220ms;
+  }
+
+  .expander-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .expander[data-open='false'] .expander-inner {
+    visibility: hidden;
+    transition: visibility 0s 160ms;
+  }
+
+  .facts {
+    display: grid;
+    gap: 8px;
+    padding-top: 16px;
+  }
+
+  .facts div {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    font-size: var(--text-sm);
+  }
+
+  .facts dt {
+    color: var(--ink-2);
+  }
+
+  /* ---------- DataFrame tables ---------- */
+  .frame {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .frame th,
+  .frame td {
+    padding: 9px 12px 9px 0;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .frame thead th {
+    font-weight: 500;
+    color: var(--ink-2);
+    font-size: var(--text-xs);
+    border-bottom-color: var(--rule-strong);
+  }
+
+  .frame tbody th {
+    font-weight: 500;
+  }
+
+  .frame .idx {
+    width: 28px;
+    color: var(--ink-3);
+    font-size: var(--text-xs);
+  }
+
+  .frame td.mono {
+    font-size: var(--text-xs);
+    white-space: nowrap;
+    color: var(--ink-2);
+  }
+
+  .bullets-row ul {
+    padding-left: 18px;
+    color: var(--n9);
+  }
+
+  .subhead {
+    margin-top: 32px;
+    font-size: var(--text-md);
+  }
+
+  .tools {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 32px;
+    margin-top: 12px;
+  }
+
+  .tools dt {
+    font-weight: 500;
+    font-size: var(--text-sm);
+  }
+
+  .tools dd {
+    color: var(--ink-2);
+    font-size: var(--text-sm);
+  }
+
+  /* ---------- Practice ---------- */
+  .practice {
+    display: grid;
+    gap: 20px;
+  }
+
+  .stdout {
+    font-size: 0.84rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    color: var(--n9);
+  }
+
+  .stderr {
+    padding: 10px 14px;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-sm);
+    background: var(--code-bg);
+    font-size: var(--text-xs);
+  }
+
+  .practice-links,
+  .elsewhere {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: var(--text-sm);
+  }
+
+  .plot-half {
+    display: none;
+  }
+
+  /* ---------- Contact ---------- */
+  .email-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
+    margin-top: 20px;
+  }
+
+  .email {
+    font-size: var(--text-md);
+  }
+
+  .elsewhere {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 859px) {
+    .notebook {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 16px 16px 0;
+    }
+
+    .shelf {
+      grid-template-columns: repeat(6, minmax(62%, 1fr));
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 16px;
+      padding-bottom: 8px;
+      overscroll-behavior-x: contain;
+    }
+
+    .shelf > li {
+      scroll-snap-align: start;
+    }
+
+    .tools {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .plot-year {
+      display: none;
+    }
+
+    .plot-half {
+      display: block;
+    }
+
+    /* Narrow screens keep a real table; drop the index and location columns. */
+    .frame .idx,
+    .frame .col-location {
+      display: none;
+    }
+
+    .frame td.mono {
+      white-space: normal;
+    }
+  }
+</style>

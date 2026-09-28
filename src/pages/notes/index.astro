@@ -1,0 +1,285 @@
+---
+import Base from '../../layouts/Base.astro';
+import NotebookCard from '../../components/NotebookCard.astro';
+import Icon from '../../components/Icon.astro';
+import { notebooks, categories } from '../../lib/notes';
+---
+
+<Base
+  title="Handwritten notebooks · Jyothi Prasanth D R"
+  description={`${notebooks.length} handwritten notebooks on transformers, RAG, LangGraph, fine-tuning, deep learning, and MLOps.`}
+  crumb={[{ label: 'notes' }]}
+>
+  <div class="library">
+    <header class="library-head">
+      <h1>Handwritten notebooks</h1>
+      <p>
+        {notebooks.length} notebooks I wrote by hand while learning the systems I build. Open one to read it page by page,
+        or download the PDF.
+      </p>
+    </header>
+
+    <div class="library-body">
+      <nav class="tree" aria-label="Notebook categories">
+        <ul role="list">
+          <li>
+            <a href="/notes" data-filter="" aria-current="true">
+              All <span class="count">{notebooks.length}</span>
+            </a>
+          </li>
+          {
+            categories.map((c) => (
+              <li>
+                <a href={`/notes?c=${c.slug}`} data-filter={c.slug}>
+                  {c.label} <span class="count">{c.count}</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="results">
+        <div class="search">
+          <label for="notes-search">Search notebooks</label>
+          <div class="search-field">
+            <Icon name="search" size={16} />
+            <input id="notes-search" type="search" autocomplete="off" spellcheck="false" placeholder="RAG, LSTM, Docker…" />
+          </div>
+        </div>
+
+        <p class="result-count" aria-live="polite" data-result-count>
+          {notebooks.length} notebooks
+        </p>
+
+        <ul class="grid" role="list">
+          {
+            notebooks.map((nb, i) => (
+              <li data-category={nb.categorySlug} data-search={`${nb.title} ${nb.category}`.toLowerCase()}>
+                <NotebookCard nb={nb} eager={i < 3} />
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="empty" data-empty hidden>
+          <p>No notebooks match <span data-empty-query></span>.</p>
+          <button class="btn btn-secondary" type="button" data-clear>Clear filters</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-filter]')];
+  const items = [...document.querySelectorAll<HTMLLIElement>('.grid > li')];
+  const input = document.querySelector<HTMLInputElement>('#notes-search')!;
+  const count = document.querySelector<HTMLElement>('[data-result-count]')!;
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+  const emptyQuery = document.querySelector<HTMLElement>('[data-empty-query]')!;
+
+  const params = new URLSearchParams(location.search);
+  let category = params.get('c') ?? '';
+  input.value = params.get('q') ?? '';
+
+  function apply() {
+    const q = input.value.trim().toLowerCase();
+    let shown = 0;
+    items.forEach((li) => {
+      const match = (!category || li.dataset.category === category) && (!q || li.dataset.search!.includes(q));
+      li.hidden = !match;
+      if (match) shown++;
+    });
+    links.forEach((a) => {
+      if (a.dataset.filter === category) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+    });
+    count.textContent = `${shown} notebook${shown === 1 ? '' : 's'}`;
+    empty.hidden = shown > 0;
+    const label = links.find((a) => a.dataset.filter === category)?.firstChild?.textContent?.trim();
+    emptyQuery.textContent = [q && `"${input.value.trim()}"`, category && `in ${label}`].filter(Boolean).join(' ');
+
+    const next = new URLSearchParams();
+    if (category) next.set('c', category);
+    if (q) next.set('q', input.value.trim());
+    const url = next.size ? `?${next}` : location.pathname;
+    history.replaceState(null, '', url);
+  }
+
+  links.forEach((a) =>
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      category = a.dataset.filter ?? '';
+      apply();
+    }),
+  );
+  input.addEventListener('input', apply);
+  document.querySelector('[data-clear]')!.addEventListener('click', () => {
+    category = '';
+    input.value = '';
+    apply();
+    input.focus();
+  });
+
+  apply();
+</script>
+
+<style>
+  .library {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 40px 24px 0;
+  }
+
+  .library-head h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .library-head p {
+    margin-top: 12px;
+    max-width: 60ch;
+    color: var(--ink-2);
+  }
+
+  .library-body {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 40px;
+    margin-top: 40px;
+  }
+
+  .tree ul {
+    list-style: none;
+    padding: 0;
+    position: sticky;
+    top: calc(var(--toolbar-h) + 32px);
+  }
+
+  .tree a {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    margin-left: -10px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--ink-2);
+    transition: background-color 120ms ease, color 120ms ease;
+  }
+
+  .tree a[aria-current='true'] {
+    color: var(--ink);
+    background: var(--n2);
+    font-weight: 500;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tree a:hover {
+      color: var(--ink);
+    }
+  }
+
+  .count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-2);
+  }
+
+  .search label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .search-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 420px;
+    padding: 0 12px;
+    background: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-sm);
+    color: var(--ink-2);
+  }
+
+  .search-field:focus-within {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
+  .search-field input {
+    flex: 1;
+    min-height: 40px;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--ink);
+    outline: none;
+  }
+
+  .search-field input::placeholder {
+    color: var(--ink-2);
+  }
+
+  .result-count {
+    margin: 20px 0 16px;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-2);
+  }
+
+  .grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 32px 20px;
+  }
+
+  .empty {
+    padding: 32px 0;
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 859px) {
+    .library {
+      padding: 24px 16px 0;
+    }
+
+    .library-body {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .tree ul {
+      position: static;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tree a {
+      margin: 0;
+      gap: 8px;
+      min-height: 44px;
+      align-items: center;
+      border: 1px solid var(--rule-strong);
+    }
+
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 16px;
+    }
+
+    .search-field input {
+      min-height: 44px;
+      font-size: 16px; /* keeps iOS from zooming on focus */
+    }
+  }
+</style>

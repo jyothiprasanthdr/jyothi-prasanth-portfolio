@@ -1,0 +1,228 @@
+/* ---------- Tokens ---------- */
+:root {
+  /* The only tonal tokens: an 11-step neutral ramp. */
+  --n0: #ffffff;
+  --n1: #f7f7f4;
+  --n2: #f0efea;
+  --n3: #e6e5e0;
+  --n4: #d5d4ce;
+  --n5: #b9b8b2;
+  --n6: #97968f;
+  --n7: #6a6c70; /* 4.9:1 on ground, 4.6:1 on code background */
+  --n8: #5e6269;
+  --n9: #3a3c40;
+  --n10: #1b1c1e;
+
+  /* The one accent. Means "running / active" and nothing else; always carries ink text. */
+  --signal: #f5c400;
+
+  --ground: var(--n1);
+  --surface: var(--n0);
+  --code-bg: var(--n2);
+  --rule: var(--n3);
+  --rule-strong: var(--n4);
+  --ink: var(--n10);
+  --ink-2: var(--n8);
+  --ink-3: var(--n7);
+
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --text-xs: 0.8125rem;   /* 13 */
+  --text-sm: 0.9375rem;   /* 15 */
+  --text-base: 1rem;      /* 16 */
+  --text-md: 1.125rem;    /* 18 */
+  --text-lg: 1.3125rem;   /* 21 */
+  --text-xl: 1.75rem;     /* 28 */
+  --text-2xl: 2.5rem;     /* 40 */
+  --text-hero: clamp(2.5rem, 4.4vw, 3.5rem); /* 40 to 56 */
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  --toolbar-h: 56px;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--toolbar-h) + 16px);
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01';
+}
+
+h1, h2, h3, h4, p, ul, ol, figure, pre, dl, dd {
+  margin: 0;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+p, li {
+  text-wrap: pretty;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--n5);
+  transition: text-decoration-color 120ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a:hover {
+    text-decoration-color: var(--ink);
+  }
+}
+
+code, kbd, pre, .mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Browser surfaces use the neutral ramp; the accent keeps its single meaning. */
+::selection {
+  background: var(--n4);
+  color: var(--ink);
+}
+
+html {
+  scrollbar-color: var(--n5) var(--ground);
+}
+
+input,
+textarea {
+  caret-color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  z-index: 100;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: var(--n0);
+  border-radius: var(--radius-sm);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font: 500 var(--text-sm) / 1 var(--font-sans);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), background-color 150ms ease, border-color 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--n0);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--rule-strong);
+}
+
+.btn-quiet {
+  background: transparent;
+  color: var(--ink);
+  border-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--n9); }
+  .btn-secondary:hover { border-color: var(--ink); }
+  .btn-quiet:hover { background: var(--n2); }
+}
+
+@media (max-width: 767px) {
+  .btn { min-height: 44px; }
+}
+
+/* ---------- The running chip (the only place the accent appears) ---------- */
+.chip {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--signal);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+/* ---------- Motion safety ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-property: opacity, color, background-color, border-color !important;
+    scroll-behavior: auto !important;
+  }
+  .btn:active { transform: none; }
+}
