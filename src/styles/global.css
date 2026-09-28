@@ -80,7 +80,7 @@ h1, h2, h3 {
   line-height: 1.15;
 }
 
-p, li {
+p, li, dd {
   text-wrap: pretty;
 }
 
@@ -218,6 +218,23 @@ textarea {
   line-height: 1.5;
 }
 
+/* ---------- Page transitions (cross-document, progressive: browsers without support just navigate) ---------- */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+  animation-timing-function: var(--ease-out);
+}
+
+/* A notebook card grows into the reader's first page. */
+::view-transition-group(*) {
+  animation-duration: 320ms;
+  animation-timing-function: var(--ease-out);
+}
+
 /* ---------- Motion safety ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -225,4 +242,9 @@ textarea {
     scroll-behavior: auto !important;
   }
   .btn:active { transform: none; }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

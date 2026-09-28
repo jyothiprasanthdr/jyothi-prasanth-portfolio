@@ -13,8 +13,8 @@ const total = days.reduce((sum, d) => sum + d.count, 0);
 const CELL = 10;
 const GAP = 2;
 const STEP = CELL + GAP;
-const LEFT = 30;
-const TOP = 18;
+const LEFT = 32;
+const TOP = 20;
 
 const first = new Date(days[0].date + 'T00:00:00Z');
 const offset = first.getUTCDay(); // 0 = Sunday, GitHub's first row
@@ -30,7 +30,7 @@ const fills = ['var(--n3)', 'var(--n5)', 'var(--n7)', 'var(--n9)', 'var(--n10)']
 
 const cells = days.map((d, i) => {
   const idx = i + offset;
-  return { x: LEFT + Math.floor(idx / 7) * STEP, y: TOP + (idx % 7) * STEP, level: level(d.count), d };
+  return { w: Math.floor(idx / 7), x: LEFT + Math.floor(idx / 7) * STEP, y: TOP + (idx % 7) * STEP, level: level(d.count), d };
 });
 
 const months: { x: number; label: string }[] = [];
@@ -53,11 +53,11 @@ const summary = `${total} GitHub contributions from ${fmt(days[0].date)} to ${fm
 
 <figure class="plot">
   <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={summary}>
-    {months.map((m) => <text x={m.x} y="10" class="axis">{m.label}</text>)}
+    {months.map((m) => <text x={m.x} y="12" class="axis">{m.label}</text>)}
     <text x="0" y={TOP + 1 * STEP + 9} class="axis">Mon</text>
     <text x="0" y={TOP + 3 * STEP + 9} class="axis">Wed</text>
     <text x="0" y={TOP + 5 * STEP + 9} class="axis">Fri</text>
-    {cells.map((c) => <rect x={c.x} y={c.y} width={CELL} height={CELL} rx="2" fill={fills[c.level]}><title>{`${c.d.count} on ${fmt(c.d.date)}`}</title></rect>)}
+    {cells.map((c) => <rect class="day" style={`--w:${c.w}`} x={c.x} y={c.y} width={CELL} height={CELL} rx="2" fill={fills[c.level]}><title>{`${c.d.count} on ${fmt(c.d.date)}`}</title></rect>)}
   </svg>
   <figcaption>
     <span>{summary}</span>
@@ -78,8 +78,20 @@ const summary = `${total} GitHub contributions from ${fmt(days[0].date)} to ${fm
 
   .axis {
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: 11px; /* viewBox units: renders at about 12px */
     fill: var(--ink-2);
+  }
+
+  /* When the cell runs, the grid prints week by week, left to right, like streamed output. */
+  /* Unconditional so the end of the run (html[data-run] removed) never cuts the print short. */
+  .day {
+    transition: opacity 160ms var(--ease-out);
+    transition-delay: calc(var(--w) * 9ms);
+  }
+
+  :global(html[data-run] .cell:not([data-state='done'])) .day {
+    opacity: 0;
+    transition: none;
   }
 
   figcaption {

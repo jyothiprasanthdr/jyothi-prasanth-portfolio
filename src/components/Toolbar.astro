@@ -6,6 +6,7 @@ interface Props {
   crumb: { label: string; href?: string }[];
 }
 const { home, crumb } = Astro.props;
+const onResume = Astro.url.pathname.replace(/\.html$/, '') === '/resume';
 ---
 
 <header class="toolbar">
@@ -42,7 +43,8 @@ const { home, crumb } = Astro.props;
         <span class="kernel-dot" aria-hidden="true"></span>
         <span class="kernel-label">Available · AI Engineer roles</span>
       </span>
-      <a class="btn btn-primary" href="/resume">Resume</a>
+      {/* Secondary: each page keeps its own single primary action. Hidden on the resume itself. */}
+      {!onResume && <a class="btn btn-secondary" href="/resume">Resume</a>}
       {
         home && (
           <button class="btn btn-secondary contents-btn" type="button" data-open-contents aria-haspopup="dialog">

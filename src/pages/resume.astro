@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import { profile } from '../data/profile';
-import { experience, education, tools, showEmployerDetail } from '../data/resume';
+import { experience, education, tools, headline, summary, resumeLocation } from '../data/resume';
 import { publicProjects } from '../lib/projects';
 import { notebooks } from '../lib/notes';
 
@@ -13,15 +13,16 @@ const hasPdf = existsSync(`public${profile.resumePdf}`);
 ---
 
 <Base
-  title="Resume · Jyothi Prasanth D R"
-  description="Resume of Jyothi Prasanth D R, AI engineer in the Bay Area."
+  title="Resume · Jyothi Prasanth"
+  description="Resume of Jyothi Prasanth, AI engineer in the Bay Area."
   crumb={[{ label: 'resume' }]}
 >
   <article class="resume">
     <header class="resume-head">
       <div>
         <h1>{profile.name}</h1>
-        <p class="role">{profile.role} · {profile.location}</p>
+        <p class="role">{headline}</p>
+        <p class="located">{resumeLocation}</p>
         <p class="contact">
           <a href={`mailto:${profile.email}`}>{profile.email}</a>
           <a href={profile.links.linkedin}>linkedin.com/in/prasanthd09898</a>
@@ -40,6 +41,11 @@ const hasPdf = existsSync(`public${profile.resumePdf}`);
       </div>
     </header>
 
+    <section aria-labelledby="summary">
+      <h2 id="summary">Summary</h2>
+      <p class="summary">{summary}</p>
+    </section>
+
     <section aria-labelledby="exp">
       <h2 id="exp">Experience</h2>
       <ol class="entries" role="list">
@@ -53,13 +59,13 @@ const hasPdf = existsSync(`public${profile.resumePdf}`);
               <p class="org">
                 {r.company} · {r.location}
               </p>
-              {showEmployerDetail && (
-                <ul class="bullets">
-                  {r.bullets.map((b) => (
-                    <li>{b}</li>
-                  ))}
-                </ul>
-              )}
+              <ul class="bullets">
+                {r.bullets.map((b) => (
+                  <li>
+                    {b.lead && <strong>{b.lead}:</strong>} {b.text}
+                  </li>
+                ))}
+              </ul>
             </li>
           ))
         }
@@ -160,6 +166,18 @@ const hasPdf = existsSync(`public${profile.resumePdf}`);
     color: var(--n9);
   }
 
+  .located {
+    margin-top: 2px;
+    font-size: var(--text-sm);
+    color: var(--ink-2);
+  }
+
+  .summary {
+    margin-top: 14px;
+    max-width: 68ch;
+    color: var(--n9);
+  }
+
   .contact {
     display: flex;
     flex-wrap: wrap;
@@ -231,10 +249,19 @@ const hasPdf = existsSync(`public${profile.resumePdf}`);
   }
 
   .bullets {
-    margin-top: 8px;
+    list-style: disc;
+    display: grid;
+    gap: 6px;
+    margin-top: 10px;
     padding-left: 18px;
     font-size: var(--text-sm);
+    line-height: 1.55;
     color: var(--n9);
+  }
+
+  .bullets strong {
+    font-weight: 600;
+    color: var(--ink);
   }
 
   .tools {

@@ -1,6 +1,6 @@
 # jyothi-prasanth.ipynb
 
-Personal site of Jyothi Prasanth D R, AI engineer. Built with Astro as a static site, designed as a notebook you run: every section is a cell.
+Personal site of Jyothi Prasanth, AI engineer. Built with Astro as a static site, designed as a notebook you run: every section is a cell.
 
 ## Commands
 
@@ -16,7 +16,7 @@ Personal site of Jyothi Prasanth D R, AI engineer. Built with Astro as a static 
 ## Where things live
 
 - `src/data/profile.ts`: name, intro line, links, availability.
-- `src/data/resume.ts`: experience, education, tools. **`showEmployerDetail` is `false`**. Employer bullets are kept in the file but not published until it is set to `true`.
+- `src/data/resume.ts`: headline, summary, experience, education, tools. It mirrors `public/Jyothi_Prasanth_Resume.pdf` word for word; update both together.
 - `src/content/projects/*.md`: public projects. Only state what the repo supports.
 - `public/notes/` + `public/notes-manifest.json`: the notebook PDFs. `public/notebook-pages/`: rendered pages (committed, so CI never needs macOS).
 - `src/data/stats.json`: generated. If a fetch fails, the last good data is kept and marked stale. Nothing is invented.
@@ -29,6 +29,6 @@ Personal site of Jyothi Prasanth D R, AI engineer. Built with Astro as a static 
 
 ## Resume PDF
 
-Put the PDF at `public/Jyothi_Prasanth_Resume.pdf`. The Download PDF button on `/resume` appears automatically once the file exists.
+The PDF lives at `public/Jyothi_Prasanth_Resume.pdf`. To update it, replace that file and copy any changed lines into `src/data/resume.ts`. The Download PDF button on `/resume` only renders while the file exists.
 
 Design direction and product context: `PORTFOLIO_SPEC.md`, `PRODUCT.md`, `DESIGN.md`.

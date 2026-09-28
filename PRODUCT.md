@@ -17,7 +17,7 @@ Delegated (owner answered "your call"). Chosen: **Astro**, static output, with i
 
 ## Product Purpose
 
-A personal site for Jyothi Prasanth D R that gets him interviews for AI Engineer roles. Success means a recruiter can find the resume and contact route immediately, and a technical reader finds enough real work to trust the resume.
+A personal site for Jyothi Prasanth that gets him interviews for AI Engineer roles. Success means a recruiter can find the resume and contact route immediately, and a technical reader finds enough real work to trust the resume.
 
 ## Positioning
 
@@ -32,7 +32,7 @@ An AI engineer who learns in public by hand: 20 handwritten notebooks on transfo
 ## Capabilities and Constraints
 
 - Positioning: **AI Engineer** first (confirmed). Data science and ML depth are supporting, not co-equal.
-- **Employer systems are not published** (confirmed answer "no"; interpreted as: no case studies, architecture diagrams, or system detail for Talent360, Ziontech, or Iowa State work). Resume-level lines (role, company, dates, outcome bullets) are the ceiling for employer work. *Open decision:* whether the quantified resume bullets already on the current site stay public.
+- **Employer systems are not published** (confirmed answer "no"; interpreted as: no case studies, architecture diagrams, or system detail for Talent360, Ziontech, or Iowa State work). Resume-level lines (role, company, dates, outcome bullets) are the ceiling for employer work. *Resolved 2026-09-28:* the owner supplied their resume PDF for the site, so its quantified bullets are public on /resume (verbatim from the PDF, nothing beyond it). The home page shows role, company, and dates only.
 - Must carry over (confirmed): the Digital Garden notes library; LeetCode/GitHub stats, **real data only**, fetched at build time.
 - Optional (not selected): publications, light/dark theme toggle.
 - The owner's photograph is not to appear anywhere on the site, including social preview images.
@@ -40,7 +40,7 @@ An AI engineer who learns in public by hand: 20 handwritten notebooks on transfo
 
 ## Brand Commitments
 
-- Name as written: **Jyothi Prasanth D R**.
+- Name as written: **Jyothi Prasanth**.
 - No photo of the owner (standing instruction).
 - No other brand assets exist yet (no logo, no palette commitment).
 
@@ -51,7 +51,7 @@ An AI engineer who learns in public by hand: 20 handwritten notebooks on transfo
 - LeetCode: profile `jpdr98`, practice repo `Leetcode_python_practice` (active 2026-09). Counts in the current data file (252 solved) are unverified until the build-time fetch runs.
 - Education: MS Computer Engineering, Iowa State (GPA 3.78); BTech IT, Anna University / MIT Chennai.
 - Publications (optional to show): IEEE 2020, Springer 2021, IGI Global 2022.
-- **Absent, must not be invented:** resume PDF (the current site links to `/Jyothi_Prasanth_Resume.pdf`, which does not exist), testimonials, employer case studies, OG/social image.
+- **Absent, must not be invented:** testimonials, employer case studies, OG/social image.
 
 ## Product Principles
 

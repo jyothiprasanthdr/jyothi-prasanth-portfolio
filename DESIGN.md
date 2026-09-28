@@ -140,7 +140,7 @@ A restrained neutral ramp with a single signal accent.
 
 ## Layout
 
-The home page is a two-column notebook: a 200px sticky contents rail, then a cell column of at most 800px, inside a 1120px frame with 24px gutters. Each cell is a two-column grid: a 72px right-aligned prompt gutter and the cell body. A section starts with 40px of extra space above its heading cell.
+The home page is a two-column notebook: a 200px sticky contents rail, then a cell column of at most 800px, inside a 1120px frame with 24px gutters. Each cell is a two-column grid: a 72px right-aligned prompt gutter and the cell body. A section starts with 64px of extra space above its heading cell (40px on phones).
 
 Below 860px the rail becomes a Contents dialog, prompts stack above their cells, code wraps instead of scrolling, the notebook shelf becomes a horizontal scroll-snap row, the contribution plot shows the last 26 weeks, and tables drop their index and Location columns. Spacing steps are 4, 8, 12, 16, 24, 32, 40, and 96px.
 
@@ -159,7 +159,7 @@ Two radii only: 4px on controls, chips, notebook-page frames, and inputs; 8px on
 
 ### Buttons
 - **Shape:** gently squared (4px), 36px tall (44px on touch screens).
-- **Primary:** Ink fill with Cell White text. One per view: Resume.
+- **Primary:** Ink fill with Cell White text. One per view: Email me on the home page, Download PDF in the reader. The toolbar's Resume is secondary so it never competes.
 - **Secondary:** Cell White with a Hairline Strong border.
 - **Quiet:** transparent, with Code Paper on hover. Used for Run all and Details.
 - **Hover / press:** the fill steps one ramp tone and the border turns to Ink. On press the button scales to 0.97 over 160ms (ease-out). Hover effects apply only to fine-pointer devices.
@@ -169,15 +169,24 @@ Two radii only: 4px on controls, chips, notebook-page frames, and inputs; 8px on
 
 ### Cells (signature component)
 - **Prompt gutter:** `In [n]:` / `Out[n]:` on code cells and the section number on heading cells, in Graphite 7. The prompt turns Ink on hover.
-- **Code input:** Code Paper box with an 8px radius and a Hairline border. A file label in mono sits above the code. Only real source, pulled from `// #region` blocks.
+- **Code input:** Code Paper box with an 8px radius and no border: the tone step alone separates it, so the page has fewer outlined boxes. A file label in mono sits above the code. Only real source, pulled from `// #region` blocks.
 - **Run states:** pending (`In [ ]:` with raw markdown source showing), running (yellow chip), done (the output fades in over 180ms with a 4px rise, and the source disappears instantly so the two texts never overlap).
 - **Section link:** on hover or focus-within, a 32px copy-link button appears at the heading cell's top right.
+
+### Notebook stack (hero object)
+- Five real handwritten pages stacked in CSS 3D (`perspective` + `preserve-3d`), no WebGL. Each sheet one step further back is offset, rotated, and 3.5% darker: depth from overlap and tone, never a shadow.
+- Entrance: sheets are dealt back to front (560ms ease-out, 70ms stagger) on the `translate` property so it never fights the resting transform.
+- Fine pointers: the stack tilts toward the pointer (one rAF per move, max 12deg) and fans open on hover or focus. Touch and reduced motion get the static stack.
+- The whole stack is one link to /notes with a mono caption of real counts.
+
+### Experience timeline
+- Dates in a 168px mono gutter, role then company and location. Spacing separates entries, not row rules. On phones the dates move under the role.
 
 ### Inputs / Fields
 - **Search:** Cell White with a Hairline Strong border and a 4px radius, with a leading magnifier icon. Focus shows the 2px Ink ring with a 2px offset. Text is 16px on phones so iOS does not zoom.
 
 ### Navigation
-- **Toolbar:** 56px sticky bar: mono wordmark `jyothi-prasanth.ipynb`, Run all in the center, and on the right the kernel status (hollow dot when idle, filled while a cell executes) and Resume. It always fits on one line, and the Contents button becomes icon-only below 480px.
+- **Toolbar:** 56px sticky bar: mono wordmark `jyothi-prasanth.ipynb`, Run all in the center, and on the right the kernel status (hollow dot when idle, filled while a cell executes) and a secondary Resume button (hidden on /resume itself). It always fits on one line, and the Contents button becomes icon-only below 480px.
 - **Contents rail:** section number plus label. The current section shows the running chip and Ink text.
 
 ## Do's and Don'ts
@@ -186,7 +195,8 @@ Two radii only: 4px on controls, chips, notebook-page frames, and inputs; 8px on
 - **Do** use Execution Yellow only as a chip with Ink text, only for running or active state.
 - **Do** keep every code cell's input a real `// #region` block read from the repository at build time.
 - **Do** separate surfaces with 1px hairlines and tone steps.
-- **Do** keep entrance motion under 300ms with a strong ease-out, and never animate keyboard-initiated moves.
+- **Do** keep UI motion under 300ms with a strong ease-out (the hero deal and card-to-reader morph are the only longer ones), and never animate keyboard-initiated moves.
+- **Do** let pages hand off with the native cross-document view transition: a notebook card morphs into the reader's first page; everything else crossfades in 180ms.
 - **Do** let the handwritten page images carry the visual weight; frame them in a 1px Hairline at 4px radius.
 
 ### Don't:

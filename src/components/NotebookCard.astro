@@ -16,6 +16,7 @@ const { nb, eager = false } = Astro.props;
     height={Math.round((440 * nb.height) / nb.width)}
     loading={eager ? 'eager' : 'lazy'}
     decoding="async"
+    style={`view-transition-name: nb-${nb.slug}`}
   />
   <span class="nb-title">{nb.title}</span>
   <span class="nb-meta">{nb.category} · {nb.pages} pages</span>
@@ -36,7 +37,14 @@ const { nb, eager = false } = Astro.props;
     background: var(--surface);
     border: 1px solid var(--rule);
     border-radius: var(--radius-sm);
-    transition: border-color 150ms ease;
+    transition:
+      border-color 150ms ease,
+      transform 220ms var(--ease-out);
+  }
+
+  .notebook-card:active img {
+    transform: scale(0.98);
+    transition-duration: 120ms;
   }
 
   .nb-title {
@@ -55,6 +63,7 @@ const { nb, eager = false } = Astro.props;
   @media (hover: hover) and (pointer: fine) {
     .notebook-card:hover img {
       border-color: var(--ink);
+      transform: translateY(-3px);
     }
   }
 </style>

@@ -5,8 +5,9 @@ import Rail from '../components/Rail.astro';
 import Icon from '../components/Icon.astro';
 import ContributionPlot from '../components/ContributionPlot.astro';
 import NotebookCard from '../components/NotebookCard.astro';
+import NotebookStack from '../components/NotebookStack.astro';
 import { profile } from '../data/profile';
-import { experience, education, tools, showEmployerDetail } from '../data/resume';
+import { experience, education, tools } from '../data/resume';
 import { notebooks, recentNotebooks } from '../lib/notes';
 import { publicProjects } from '../lib/projects';
 import { region } from '../lib/source';
@@ -16,6 +17,8 @@ import projectsSource from '../lib/projects.ts?raw';
 import statsSource from '../../scripts/fetch-stats.mjs?raw';
 
 const shelf = recentNotebooks(6);
+// The home page shows the first few tools per group; /resume has the full list from the PDF.
+const HOME_TOOLS = 5;
 const projects = await publicProjects();
 
 const railItems = [
@@ -41,7 +44,7 @@ const stdout =
 ---
 
 <Base
-  title="Jyothi Prasanth D R · AI Engineer"
+  title="Jyothi Prasanth · AI Engineer"
   description="AI engineer in the Bay Area building agent and retrieval systems. Handwritten notebooks, public projects, and resume."
   home
 >
@@ -51,11 +54,19 @@ const stdout =
 
     <div class="cells">
       <Cell section={1} id="about" kind="markdown" toc="About" source={`# ${profile.name}`}>
-        <h1 class="name">{profile.name}</h1>
-        <p class="intro">{profile.intro}</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="/resume">Resume</a>
-          <a class="btn btn-secondary" href={`mailto:${profile.email}`}>Email me</a>
+        <div class="hero">
+          <div class="hero-text">
+            <h1 class="name">{profile.name}</h1>
+            <p class="intro">{profile.intro}</p>
+            <div class="actions">
+              <a class="btn btn-primary" href={`mailto:${profile.email}`}>Email me</a>
+              <a class="btn btn-secondary" href={profile.links.github} target="_blank" rel="noopener">
+                GitHub <Icon name="arrowUpRight" size={14} />
+                <span class="visually-hidden">(opens in new tab)</span>
+              </a>
+            </div>
+          </div>
+          <NotebookStack />
         </div>
       </Cell>
 
@@ -139,66 +150,36 @@ const stdout =
 
       <Cell section={4} id="experience" kind="markdown" toc="Experience" source="## Experience">
         <h2 class="section-title">Experience</h2>
-        <table class="frame">
-          <caption class="visually-hidden">Work experience</caption>
-          <thead>
-            <tr>
-              <th scope="col" class="idx" aria-hidden="true"></th>
-              <th scope="col">Role</th>
-              <th scope="col">Company</th>
-              <th scope="col" class="col-location">Location</th>
-              <th scope="col">Dates</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              experience.map((r, i) => (
-                <>
-                  <tr>
-                    <td class="idx mono" aria-hidden="true">{i}</td>
-                    <th scope="row">{r.role}</th>
-                    <td>{r.company}</td>
-                    <td class="col-location">{r.location}</td>
-                    <td class="mono">{r.period}</td>
-                  </tr>
-                  {showEmployerDetail && (
-                    <tr class="bullets-row">
-                      <td class="idx" aria-hidden="true" />
-                      <td colspan="4">
-                        <ul>{r.bullets.map((b) => <li>{b}</li>)}</ul>
-                      </td>
-                    </tr>
-                  )}
-                </>
-              ))
-            }
-          </tbody>
-        </table>
+        <ol class="timeline" role="list">
+          {
+            experience.map((r) => (
+              <li>
+                <p class="when mono">{r.period}</p>
+                <div>
+                  <h3 class="what">{r.role}</h3>
+                  <p class="where">
+                    {r.company}, {r.location}
+                  </p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
 
         <h3 class="subhead">Education</h3>
-        <table class="frame">
-          <caption class="visually-hidden">Education</caption>
-          <thead>
-            <tr>
-              <th scope="col" class="idx" aria-hidden="true"></th>
-              <th scope="col">Degree</th>
-              <th scope="col">School</th>
-              <th scope="col">Dates</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              education.map((e, i) => (
-                <tr>
-                  <td class="idx mono" aria-hidden="true">{i}</td>
-                  <th scope="row">{e.degree}</th>
-                  <td>{e.school}</td>
-                  <td class="mono">{e.period}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+        <ol class="timeline" role="list">
+          {
+            education.map((e) => (
+              <li>
+                <p class="when mono">{e.period}</p>
+                <div>
+                  <h4 class="what">{e.degree}</h4>
+                  <p class="where">{e.school}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
 
         <h3 class="subhead">Tools</h3>
         <dl class="tools">
@@ -206,11 +187,14 @@ const stdout =
             tools.map((t) => (
               <div>
                 <dt>{t.group}</dt>
-                <dd>{t.items.join(', ')}</dd>
+                <dd>{t.items.slice(0, HOME_TOOLS).join(', ')}</dd>
               </div>
             ))
           }
         </dl>
+        <a class="more" href="/resume#tools">
+          Full skills list <Icon name="arrowRight" size={14} />
+        </a>
       </Cell>
 
       <Cell section={5} id="practice" kind="markdown" toc="Practice" source="## Practice">
@@ -287,6 +271,14 @@ const stdout =
 
   .cells {
     min-width: 0;
+  }
+
+  /* ---------- Hero: text left, the notebook stack right ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(210px, 36%, 270px);
+    align-items: center;
+    column-gap: 32px;
   }
 
   .name {
@@ -425,49 +417,38 @@ const stdout =
     color: var(--ink-2);
   }
 
-  /* ---------- DataFrame tables ---------- */
-  .frame {
-    width: 100%;
+  /* ---------- Experience / education: dates in a mono gutter, spacing instead of row rules ---------- */
+  .timeline {
+    list-style: none;
+    padding: 0;
     margin-top: 20px;
-    border-collapse: collapse;
-    font-size: var(--text-sm);
-    font-variant-numeric: tabular-nums;
+    display: grid;
+    gap: 18px;
   }
 
-  .frame th,
-  .frame td {
-    padding: 9px 12px 9px 0;
-    text-align: left;
-    vertical-align: top;
-    border-bottom: 1px solid var(--rule);
+  .timeline > li {
+    display: grid;
+    grid-template-columns: 168px minmax(0, 1fr);
+    column-gap: 20px;
   }
 
-  .frame thead th {
-    font-weight: 500;
-    color: var(--ink-2);
+  .when {
+    padding-top: 3px;
     font-size: var(--text-xs);
-    border-bottom-color: var(--rule-strong);
-  }
-
-  .frame tbody th {
-    font-weight: 500;
-  }
-
-  .frame .idx {
-    width: 28px;
     color: var(--ink-3);
-    font-size: var(--text-xs);
-  }
-
-  .frame td.mono {
-    font-size: var(--text-xs);
     white-space: nowrap;
-    color: var(--ink-2);
   }
 
-  .bullets-row ul {
-    padding-left: 18px;
-    color: var(--n9);
+  .what {
+    font-size: var(--text-base);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+  }
+
+  .where {
+    font-size: var(--text-sm);
+    color: var(--ink-2);
   }
 
   .subhead {
@@ -573,14 +554,24 @@ const stdout =
       display: block;
     }
 
-    /* Narrow screens keep a real table; drop the index and location columns. */
-    .frame .idx,
-    .frame .col-location {
-      display: none;
+    .timeline > li {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 2px;
     }
 
-    .frame td.mono {
-      white-space: normal;
+    .when {
+      padding-top: 0;
+      order: 1;
+    }
+
+    .hero {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero :global(.stack) {
+      width: min(210px, 62%);
+      justify-self: center;
+      margin-top: 8px;
     }
   }
 </style>
