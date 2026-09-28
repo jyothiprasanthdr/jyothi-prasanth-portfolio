@@ -23,10 +23,10 @@ const projects = await publicProjects();
 
 const railItems = [
   { n: 1, id: 'about', label: 'About' },
-  { n: 2, id: 'notebooks', label: 'Handwritten notebooks' },
-  { n: 3, id: 'projects', label: 'Projects' },
-  { n: 4, id: 'experience', label: 'Experience' },
-  { n: 5, id: 'practice', label: 'Practice' },
+  { n: 2, id: 'experience', label: 'Experience' },
+  { n: 3, id: 'practice', label: 'Practice' },
+  { n: 4, id: 'projects', label: 'Projects' },
+  { n: 5, id: 'notebooks', label: 'Handwritten notebooks' },
   { n: 6, id: 'contact', label: 'Contact' },
 ];
 
@@ -70,30 +70,90 @@ const stdout =
         </div>
       </Cell>
 
-      <Cell section={2} id="notebooks" kind="markdown" toc="Handwritten notebooks" source="## Handwritten notebooks">
-        <h2 class="section-title">Handwritten notebooks</h2>
-        <p class="lede">
-          {notebooks.length} notebooks I wrote by hand while learning the systems I build: transformers, RAG, LangGraph,
-          fine-tuning, and MLOps.
-        </p>
-      </Cell>
-
-      <Cell n={1} id="notebooks-shelf" kind="code" input={region(notesSource, 'shelf')} inputLabel="src/lib/notes.ts">
-        <ul class="shelf" role="list">
+      <Cell section={2} id="experience" kind="markdown" toc="Experience" source="## Experience">
+        <h2 class="section-title">Experience</h2>
+        <ol class="timeline" role="list">
           {
-            shelf.map((nb) => (
+            experience.map((r) => (
               <li>
-                <NotebookCard nb={nb} />
+                <p class="when mono">{r.period}</p>
+                <div>
+                  <h3 class="what">{r.role}</h3>
+                  <p class="where">
+                    {r.company}, {r.location}
+                  </p>
+                </div>
               </li>
             ))
           }
-        </ul>
-        <a class="more" href="/notes">
-          Open all {notebooks.length} notebooks <Icon name="arrowRight" size={14} />
+        </ol>
+
+        <h3 class="subhead">Education</h3>
+        <ol class="timeline" role="list">
+          {
+            education.map((e) => (
+              <li>
+                <p class="when mono">{e.period}</p>
+                <div>
+                  <h4 class="what">{e.degree}</h4>
+                  <p class="where">{e.school}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <h3 class="subhead">Tools</h3>
+        <dl class="tools">
+          {
+            tools.map((t) => (
+              <div>
+                <dt>{t.group}</dt>
+                <dd>{t.items.slice(0, HOME_TOOLS).join(', ')}</dd>
+              </div>
+            ))
+          }
+        </dl>
+        <a class="more" href="/resume#tools">
+          Full skills list <Icon name="arrowRight" size={14} />
         </a>
       </Cell>
 
-      <Cell section={3} id="projects" kind="markdown" toc="Projects" source="## Projects">
+      <Cell section={3} id="practice" kind="markdown" toc="Practice" source="## Practice">
+        <h2 class="section-title">Practice</h2>
+        <p class="lede">Pulled from LeetCode and GitHub each time this site builds.</p>
+      </Cell>
+
+      <Cell n={1} id="practice-data" kind="code" input={region(statsSource, 'cell')} inputLabel="scripts/fetch-stats.mjs">
+        {
+          stats.leetcode && stats.github ? (
+            <div class="practice">
+              {stats.stale && (
+                <p class="stderr mono">The last fetch failed. Showing data from {fetchedOn}.</p>
+              )}
+              <pre class="stdout mono">{stdout}</pre>
+              <div class="plot-year">
+                <ContributionPlot days={stats.github.days} />
+              </div>
+              <div class="plot-half">
+                <ContributionPlot days={stats.github.days} lastWeeks={26} />
+              </div>
+              <p class="practice-links">
+                <a href={profile.links.leetcode} target="_blank" rel="noopener">
+                  LeetCode profile<span class="visually-hidden"> (opens in new tab)</span>
+                </a>
+                <a href={profile.links.github} target="_blank" rel="noopener">
+                  GitHub profile<span class="visually-hidden"> (opens in new tab)</span>
+                </a>
+              </p>
+            </div>
+          ) : (
+            <p class="stderr mono">Stats could not be fetched for this build.</p>
+          )
+        }
+      </Cell>
+
+      <Cell section={4} id="projects" kind="markdown" toc="Projects" source="## Projects">
         <h2 class="section-title">Projects</h2>
         <p class="lede">Public work on GitHub. Each one links to its repository.</p>
       </Cell>
@@ -148,87 +208,27 @@ const stdout =
         </ul>
       </Cell>
 
-      <Cell section={4} id="experience" kind="markdown" toc="Experience" source="## Experience">
-        <h2 class="section-title">Experience</h2>
-        <ol class="timeline" role="list">
+      <Cell section={5} id="notebooks" kind="markdown" toc="Handwritten notebooks" source="## Handwritten notebooks">
+        <h2 class="section-title">Handwritten notebooks</h2>
+        <p class="lede">
+          {notebooks.length} notebooks I wrote by hand while learning the systems I build: transformers, RAG, LangGraph,
+          fine-tuning, and MLOps.
+        </p>
+      </Cell>
+
+      <Cell n={3} id="notebooks-shelf" kind="code" input={region(notesSource, 'shelf')} inputLabel="src/lib/notes.ts">
+        <ul class="shelf" role="list">
           {
-            experience.map((r) => (
+            shelf.map((nb) => (
               <li>
-                <p class="when mono">{r.period}</p>
-                <div>
-                  <h3 class="what">{r.role}</h3>
-                  <p class="where">
-                    {r.company}, {r.location}
-                  </p>
-                </div>
+                <NotebookCard nb={nb} />
               </li>
             ))
           }
-        </ol>
-
-        <h3 class="subhead">Education</h3>
-        <ol class="timeline" role="list">
-          {
-            education.map((e) => (
-              <li>
-                <p class="when mono">{e.period}</p>
-                <div>
-                  <h4 class="what">{e.degree}</h4>
-                  <p class="where">{e.school}</p>
-                </div>
-              </li>
-            ))
-          }
-        </ol>
-
-        <h3 class="subhead">Tools</h3>
-        <dl class="tools">
-          {
-            tools.map((t) => (
-              <div>
-                <dt>{t.group}</dt>
-                <dd>{t.items.slice(0, HOME_TOOLS).join(', ')}</dd>
-              </div>
-            ))
-          }
-        </dl>
-        <a class="more" href="/resume#tools">
-          Full skills list <Icon name="arrowRight" size={14} />
+        </ul>
+        <a class="more" href="/notes">
+          Open all {notebooks.length} notebooks <Icon name="arrowRight" size={14} />
         </a>
-      </Cell>
-
-      <Cell section={5} id="practice" kind="markdown" toc="Practice" source="## Practice">
-        <h2 class="section-title">Practice</h2>
-        <p class="lede">Pulled from LeetCode and GitHub each time this site builds.</p>
-      </Cell>
-
-      <Cell n={3} id="practice-data" kind="code" input={region(statsSource, 'cell')} inputLabel="scripts/fetch-stats.mjs">
-        {
-          stats.leetcode && stats.github ? (
-            <div class="practice">
-              {stats.stale && (
-                <p class="stderr mono">The last fetch failed. Showing data from {fetchedOn}.</p>
-              )}
-              <pre class="stdout mono">{stdout}</pre>
-              <div class="plot-year">
-                <ContributionPlot days={stats.github.days} />
-              </div>
-              <div class="plot-half">
-                <ContributionPlot days={stats.github.days} lastWeeks={26} />
-              </div>
-              <p class="practice-links">
-                <a href={profile.links.leetcode} target="_blank" rel="noopener">
-                  LeetCode profile<span class="visually-hidden"> (opens in new tab)</span>
-                </a>
-                <a href={profile.links.github} target="_blank" rel="noopener">
-                  GitHub profile<span class="visually-hidden"> (opens in new tab)</span>
-                </a>
-              </p>
-            </div>
-          ) : (
-            <p class="stderr mono">Stats could not be fetched for this build.</p>
-          )
-        }
       </Cell>
 
       <Cell section={6} id="contact" kind="markdown" toc="Contact" source="## Contact">
