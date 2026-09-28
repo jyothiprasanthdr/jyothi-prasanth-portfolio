@@ -7,12 +7,16 @@ const kernel = document.querySelector<HTMLElement>('[data-kernel]');
 
 const RUN_MS = 150; // how long a code cell shows In [*]:
 const STAGGER_MS = 60; // gap before the next cell starts
+const TYPE_MS = 34; // per character when a markdown cell is typed in
+const RENDER_PAUSE_MS = 220; // caret rests on the finished line, then the cell renders (Shift+Enter)
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 // Markdown cells only change state (they render); code cells also show In [ ]: -> In [*]: -> In [n]:.
 function setPrompt(cell: HTMLElement, state: 'pending' | 'running' | 'done') {
   cell.dataset.state = state;
+  const typed = cell.querySelector<HTMLElement>('[data-typed]');
+  if (typed) typed.textContent = state === 'pending' ? '' : typed.closest<HTMLElement>('[data-typewriter]')!.dataset.typewriter!;
   const prompt = cell.querySelector<HTMLElement>('[data-prompt]');
   if (!prompt) return;
   if (state === 'running') prompt.innerHTML = 'In <span class="chip">[*]</span>:';
@@ -32,6 +36,19 @@ function checkFinished() {
 function execute(cell: HTMLElement, token: number) {
   queue = queue.then(async () => {
     if (token !== runToken || cell.dataset.state !== 'pending') return;
+    const source = cell.querySelector<HTMLElement>('[data-typewriter]');
+    const typed = source?.querySelector<HTMLElement>('[data-typed]');
+    if (source && typed) {
+      // Edit mode: the markdown source is typed in, then the cell renders.
+      const text = source.dataset.typewriter!;
+      for (let i = 1; i <= text.length; i++) {
+        if (token !== runToken || cell.dataset.state !== 'pending') return;
+        typed.textContent = text.slice(0, i);
+        await wait(TYPE_MS);
+      }
+      await wait(RENDER_PAUSE_MS);
+      if (token !== runToken || cell.dataset.state !== 'pending') return;
+    }
     if (cell.dataset.kind === 'code') {
       setPrompt(cell, 'running');
       kernel?.setAttribute('data-busy', '');

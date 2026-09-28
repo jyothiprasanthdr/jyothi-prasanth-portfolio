@@ -7,6 +7,15 @@ export const resumeLocation = 'Fremont, CA';
 export const summary =
   'AI Engineer and Data Scientist building production-grade generative AI systems, multi-agent workflows, and retrieval infrastructure. Experienced in LangGraph orchestration, agentic retrieval-augmented generation (RAG), low-latency FastAPI services, automated evaluation, and cloud-native deployment. Delivers measurable gains in latency, faithfulness, model-call efficiency, and operational automation.';
 
+// Three results from the bullets below, shown as the home page's first code cell. Keep them verbatim.
+// #region highlights
+export const highlights = [
+  { value: '28%', label: 'lower downstream latency from hybrid retrieval' },
+  { value: '77%', label: 'RAG faithfulness, up from 62%' },
+  { value: '38%', label: 'of redundant LLM calls caught by a semantic cache' },
+];
+// #endregion highlights
+
 export type Bullet = { lead?: string; text: string };
 
 export type Role = {

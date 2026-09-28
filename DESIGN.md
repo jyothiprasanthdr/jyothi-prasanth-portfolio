@@ -16,7 +16,7 @@ colors:
 typography:
   display:
     fontFamily: "Geist Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(2.5rem, 4.4vw, 3.5rem)"
+    fontSize: "clamp(2.75rem, 5.4vw, 4.25rem)"
     fontWeight: 600
     lineHeight: 1.02
     letterSpacing: "-0.035em"
@@ -129,7 +129,7 @@ A restrained neutral ramp with a single signal accent.
 **Character:** One superfamily across a wide size range. The sans handles every human sentence. The mono is reserved for what a notebook prints in mono.
 
 ### Hierarchy
-- **Display** (600, clamp 2.5–3.5rem, 1.02): the name in section 1 only.
+- **Display** (600, clamp 2.75–4.25rem, 1.02): the name in section 1 only. Under it: a 500-weight tagline (1.3125rem, Ink) and a small Graphite 8 line with the current role and location.
 - **Headline** (600, 1.75rem, 1.15): section headings (sections 2–5) and page titles on the reader and library.
 - **Title** (600, 1.3125rem): project names and sub-headings.
 - **Body** (400, 1rem, 1.6): prose, capped at about 62–68ch; `text-wrap: pretty`.
@@ -171,6 +171,11 @@ Two radii only: 4px on controls, chips, notebook-page frames, and inputs; 8px on
 - **Prompt gutter:** `In [n]:` / `Out[n]:` on code cells and the section number on heading cells, in Graphite 7. The prompt turns Ink on hover.
 - **Code input:** Code Paper box with an 8px radius and no border: the tone step alone separates it, so the page has fewer outlined boxes. A file label in mono sits above the code. Only real source, pulled from `// #region` blocks.
 - **Run states:** pending (`In [ ]:` with raw markdown source showing), running (yellow chip), done (the output fades in over 180ms with a 4px rise, and the source disappears instantly so the two texts never overlap).
+- **Edit mode (hero only):** on a first visit the hero's markdown source `# Jyothi Prasanth` is typed in (34ms per character, large bold mono like JupyterLab's editor, blinking block caret), rests 220ms, then renders. Run all types it again.
+- **Streamed output:** list items marked `.print` (highlights, stdout lines, experience rows, projects) appear one after another, 70ms apart, when their cell renders, the way Jupyter streams output. First-visit run only.
+
+### Highlights (In [1])
+- Three results quoted from the resume, from a real `// #region highlights` block in `src/data/resume.ts`. Large mono value over a short label, separated by a Hairline Strong top rule, not boxed. On phones: one row per result, value left.
 - **Section link:** on hover or focus-within, a 32px copy-link button appears at the heading cell's top right.
 
 ### Experience timeline

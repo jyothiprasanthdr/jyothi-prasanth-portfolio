@@ -35,7 +35,7 @@
   --text-lg: 1.3125rem;   /* 21 */
   --text-xl: 1.75rem;     /* 28 */
   --text-2xl: 2.5rem;     /* 40 */
-  --text-hero: clamp(2.5rem, 4.4vw, 3.5rem); /* 40 to 56 */
+  --text-hero: clamp(2.75rem, 5.4vw, 4.25rem); /* 44 to 68 */
 
   --radius-sm: 4px;
   --radius-md: 8px;
@@ -218,6 +218,23 @@ textarea {
   line-height: 1.5;
 }
 
+/* ---------- Streamed output ----------
+   Items marked .print appear one after another when their cell renders, the way Jupyter streams
+   output line by line. Only on the first-visit run (html[data-run]); otherwise they are simply there.
+   The transition is unconditional so ending the run never cuts it short. */
+.print {
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+  transition-delay: calc(60ms + var(--i, 0) * 70ms);
+}
+
+html[data-run] .cell:not([data-state='done']) .print {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: none;
+}
+
 /* ---------- Page transitions (cross-document, progressive: browsers without support just navigate) ---------- */
 @view-transition {
   navigation: auto;
@@ -242,6 +259,7 @@ textarea {
     scroll-behavior: auto !important;
   }
   .btn:active { transform: none; }
+  html[data-run] .cell:not([data-state='done']) .print { transform: none; }
   ::view-transition-group(*),
   ::view-transition-old(*),
   ::view-transition-new(*) {

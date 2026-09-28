@@ -15,8 +15,10 @@ interface Props {
   /** Code cells: real source code from this repo (see src/lib/source.ts). */
   input?: string;
   inputLabel?: string;
+  /** Markdown cells: type the source in with a caret before it renders (first visit only). */
+  typewriter?: boolean;
 }
-const { id, kind, n, section, toc, source, input, inputLabel } = Astro.props;
+const { id, kind, n, section, toc, source, input, inputLabel, typewriter = false } = Astro.props;
 ---
 
 <section
@@ -51,7 +53,14 @@ const { id, kind, n, section, toc, source, input, inputLabel } = Astro.props;
   }
 
   <div class="cell-stack">
-    {source && <pre class="cell-source" aria-hidden="true">{source}</pre>}
+    {
+      source &&
+        (typewriter ? (
+          <pre class="cell-source" aria-hidden="true" data-typewriter={source}><span data-typed /><span class="caret" /></pre>
+        ) : (
+          <pre class="cell-source" aria-hidden="true">{source}</pre>
+        ))
+    }
     <div class="cell-output" data-output>
       <slot />
     </div>
@@ -164,6 +173,32 @@ const { id, kind, n, section, toc, source, input, inputLabel } = Astro.props;
     color: var(--ink-2);
     white-space: pre-wrap;
     padding-top: 4px;
+  }
+
+  /* JupyterLab's editor shows a markdown heading line large and bold while you type it. */
+  .cell-source[data-typewriter] {
+    padding-top: 0;
+    font-size: var(--text-xl);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  /* Edit mode: the text cursor while a markdown cell is being typed. */
+  .caret {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.15em;
+    margin-left: 1px;
+    vertical-align: text-bottom;
+    background: var(--ink-2);
+    animation: caret 1s steps(1) infinite;
+  }
+
+  @keyframes caret {
+    50% {
+      opacity: 0;
+    }
   }
 
   /* ---------- Run-all states (only while html[data-run] is set) ---------- */

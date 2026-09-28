@@ -5,11 +5,12 @@ import Rail from '../components/Rail.astro';
 import Icon from '../components/Icon.astro';
 import ContributionPlot from '../components/ContributionPlot.astro';
 import { profile } from '../data/profile';
-import { experience, education, tools } from '../data/resume';
+import { experience, education, tools, highlights } from '../data/resume';
 import { publicProjects } from '../lib/projects';
 import { region } from '../lib/source';
 import stats from '../data/stats.json';
 import projectsSource from '../lib/projects.ts?raw';
+import resumeSource from '../data/resume.ts?raw';
 import statsSource from '../../scripts/fetch-stats.mjs?raw';
 
 // The home page shows the first few tools per group; /resume has the full list from the PDF.
@@ -27,14 +28,14 @@ const railItems = [
 const fetchedOn = stats.fetchedAt
   ? new Date(stats.fetchedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
   : null;
-const stdout =
+const stdout: string[] =
   stats.leetcode && stats.github
     ? [
         `LeetCode  ${stats.leetcode.solved} solved (${stats.leetcode.easy} easy, ${stats.leetcode.medium} medium, ${stats.leetcode.hard} hard)`,
         `GitHub    ${stats.github.total} contributions in the last 12 months`,
         `fetched   ${fetchedOn}`,
-      ].join('\n')
-    : '';
+      ]
+    : [];
 ---
 
 <Base
@@ -47,9 +48,10 @@ const stdout =
     <Rail items={railItems} />
 
     <div class="cells">
-      <Cell section={1} id="about" kind="markdown" toc="About" source={`# ${profile.name}`}>
+      <Cell section={1} id="about" kind="markdown" toc="About" source={`# ${profile.name}`} typewriter>
         <h1 class="name">{profile.name}</h1>
-        <p class="intro">{profile.intro}</p>
+        <p class="tagline">{profile.tagline}</p>
+        <p class="now">{profile.now}</p>
         <div class="actions">
           <a class="btn btn-primary" href={`mailto:${profile.email}`}>Email me</a>
           <a class="btn btn-secondary" href={profile.links.github} target="_blank" rel="noopener">
@@ -59,12 +61,25 @@ const stdout =
         </div>
       </Cell>
 
+      <Cell n={1} id="highlights" kind="code" input={region(resumeSource, 'highlights')} inputLabel="src/data/resume.ts">
+        <ul class="highlights" role="list">
+          {
+            highlights.map((h, i) => (
+              <li class="print" style={`--i:${i}`}>
+                <span class="h-value mono">{h.value}</span>
+                <span class="h-label">{h.label}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </Cell>
+
       <Cell section={2} id="experience" kind="markdown" toc="Experience" source="## Experience">
         <h2 class="section-title">Experience</h2>
         <ol class="timeline" role="list">
           {
-            experience.map((r) => (
-              <li>
+            experience.map((r, i) => (
+              <li class="print" style={`--i:${i}`}>
                 <p class="when mono">{r.period}</p>
                 <div>
                   <h3 class="what">{r.role}</h3>
@@ -80,8 +95,8 @@ const stdout =
         <h3 class="subhead">Education</h3>
         <ol class="timeline" role="list">
           {
-            education.map((e) => (
-              <li>
+            education.map((e, i) => (
+              <li class="print" style={`--i:${experience.length + i}`}>
                 <p class="when mono">{e.period}</p>
                 <div>
                   <h4 class="what">{e.degree}</h4>
@@ -113,14 +128,14 @@ const stdout =
         <p class="lede">Pulled from LeetCode and GitHub each time this site builds.</p>
       </Cell>
 
-      <Cell n={1} id="practice-data" kind="code" input={region(statsSource, 'cell')} inputLabel="scripts/fetch-stats.mjs">
+      <Cell n={2} id="practice-data" kind="code" input={region(statsSource, 'cell')} inputLabel="scripts/fetch-stats.mjs">
         {
           stats.leetcode && stats.github ? (
             <div class="practice">
               {stats.stale && (
                 <p class="stderr mono">The last fetch failed. Showing data from {fetchedOn}.</p>
               )}
-              <pre class="stdout mono">{stdout}</pre>
+              <pre class="stdout mono">{stdout.map((line, i) => <span class="print" style={`--i:${i}`}>{line}</span>)}</pre>
               <div class="plot-year">
                 <ContributionPlot days={stats.github.days} />
               </div>
@@ -147,11 +162,11 @@ const stdout =
         <p class="lede">Public work on GitHub. Each one links to its repository.</p>
       </Cell>
 
-      <Cell n={2} id="projects-list" kind="code" input={region(projectsSource, 'projects')} inputLabel="src/lib/projects.ts">
+      <Cell n={3} id="projects-list" kind="code" input={region(projectsSource, 'projects')} inputLabel="src/lib/projects.ts">
         <ul class="projects" role="list">
           {
-            projects.map((p) => (
-              <li class="project">
+            projects.map((p, i) => (
+              <li class="project print" style={`--i:${i}`}>
                 <h3>
                   <a href={`/projects/${p.id}`}>{p.data.title}</a>
                 </h3>
@@ -246,12 +261,51 @@ const stdout =
     padding-top: 4px;
   }
 
-  .intro {
-    margin-top: 16px;
-    max-width: 34ch;
+  .tagline {
+    margin-top: 18px;
+    max-width: 36ch;
     font-size: var(--text-lg);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+
+  .now {
+    margin-top: 8px;
+    font-size: var(--text-sm);
+    color: var(--ink-2);
+  }
+
+  /* ---------- Highlights: three results from the resume, printed as output ---------- */
+  .highlights {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px 28px;
+  }
+
+  .highlights li {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule-strong);
+  }
+
+  .h-value {
+    font-size: var(--text-2xl);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .h-label {
+    max-width: 24ch;
+    font-size: var(--text-sm);
     line-height: 1.45;
-    color: var(--n9);
+    color: var(--ink-2);
   }
 
   .actions {
@@ -428,6 +482,10 @@ const stdout =
     gap: 20px;
   }
 
+  .stdout > span {
+    display: block;
+  }
+
   .stdout {
     font-size: 0.84rem;
     line-height: 1.7;
@@ -480,6 +538,21 @@ const stdout =
 
     .tools {
       grid-template-columns: minmax(0, 1fr);
+    }
+
+    .highlights {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+
+    .highlights li {
+      grid-template-columns: 88px minmax(0, 1fr);
+      align-items: baseline;
+      column-gap: 16px;
+    }
+
+    .h-value {
+      font-size: var(--text-xl);
     }
 
     .plot-year {
