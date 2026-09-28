@@ -1,0 +1,93 @@
+{
+  "appVersion" : "1.4.38",
+  "appBuild" : "204",
+  "packageFormatVersion" : "1.21",
+  "version" : 1,
+  "type" : "dataExport",
+  "createdAt" : "2026-09-02T10:43:53Z",
+  "items" : [
+    {
+      "parentId" : "",
+      "position" : "+EIck58",
+      "colorIndex" : 8,
+      "id" : "6EA1AC77D056450BAD76662907899E8C",
+      "isFolder" : true,
+      "subtype" : 0,
+      "relativePath" : "\/Gen AI",
+      "name" : "Gen AI",
+      "icon" : ""
+    },
+    {
+      "subtype" : 0,
+      "id" : "18B89C89D15B42E7AC0101CF3C1BBBA8",
+      "parentId" : "6EA1AC77D056450BAD76662907899E8C",
+      "name" : "Chunking Techniques for RAG",
+      "isDrawing" : true,
+      "relativePath" : "\/Gen AI\/Chunking Techniques for RAG.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "9B9493F530434A799DD73359203F30D9",
+      "parentId" : "6EA1AC77D056450BAD76662907899E8C",
+      "name" : "LangChain Detailed",
+      "isDrawing" : true,
+      "relativePath" : "\/Gen AI\/LangChain Detailed.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "9C1CFE4E030B4EA6A76F46B30C75BB74",
+      "parentId" : "6EA1AC77D056450BAD76662907899E8C",
+      "name" : "LangGraph",
+      "isDrawing" : true,
+      "relativePath" : "\/Gen AI\/LangGraph.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "63785E69E11444DBBAC107E4DF90E95D",
+      "parentId" : "6EA1AC77D056450BAD76662907899E8C",
+      "name" : "MCP - Model Context Protocol",
+      "isDrawing" : true,
+      "relativePath" : "\/Gen AI\/MCP - Model Context Protocol.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "BAD7FBFC81DF4391957699B2BF021749",
+      "parentId" : "6EA1AC77D056450BAD76662907899E8C",
+      "name" : "Parameter Efficient Fine Tuning",
+      "isDrawing" : true,
+      "relativePath" : "\/Gen AI\/Parameter Efficient Fine Tuning.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "8B600035298F45E7A961EEB27FC01C5B",
+      "parentId" : "6EA1AC77D056450BAD76662907899E8C",
+      "name" : "Prompt Engineering",
+      "isDrawing" : true,
+      "relativePath" : "\/Gen AI\/Prompt Engineering.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "1FD2EEBF22044654BB44E30A9BF8D3DE",
+      "parentId" : "6EA1AC77D056450BAD76662907899E8C",
+      "name" : "RAG",
+      "isDrawing" : true,
+      "relativePath" : "\/Gen AI\/RAG.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "201AFB0CD8C54F5FBEDBD09501025645",
+      "parentId" : "6EA1AC77D056450BAD76662907899E8C",
+      "name" : "RedTeaming",
+      "isDrawing" : true,
+      "relativePath" : "\/Gen AI\/RedTeaming.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "08E7691F678640C1840DCED7408C70A3",
+      "parentId" : "6EA1AC77D056450BAD76662907899E8C",
+      "name" : "Transformer",
+      "isDrawing" : true,
+      "relativePath" : "\/Gen AI\/Transformer.pdf"
+    }
+  ]
+}

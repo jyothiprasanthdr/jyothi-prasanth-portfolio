@@ -1,0 +1,77 @@
+{
+  "appVersion" : "1.4.38",
+  "appBuild" : "204",
+  "packageFormatVersion" : "1.21",
+  "version" : 1,
+  "type" : "dataExport",
+  "createdAt" : "2026-09-02T10:43:15Z",
+  "items" : [
+    {
+      "parentId" : "",
+      "position" : "+E4txgM",
+      "colorIndex" : 8,
+      "id" : "5756EEA4E5D54D609B66116AFC3A2C32",
+      "isFolder" : true,
+      "subtype" : 0,
+      "relativePath" : "\/Deep Learning",
+      "name" : "Deep Learning",
+      "icon" : "book-outline"
+    },
+    {
+      "subtype" : 0,
+      "id" : "A899D9260C1549E29C857796151C8A61",
+      "parentId" : "5756EEA4E5D54D609B66116AFC3A2C32",
+      "name" : "Activation Functions",
+      "isDrawing" : true,
+      "relativePath" : "\/Deep Learning\/Activation Functions.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "B9CCB5A843E04A00B5B5DDB00767EC6A",
+      "parentId" : "5756EEA4E5D54D609B66116AFC3A2C32",
+      "name" : "CNN",
+      "isDrawing" : true,
+      "relativePath" : "\/Deep Learning\/CNN.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "1DB5B1589223448E9407D2042EFCD521",
+      "parentId" : "5756EEA4E5D54D609B66116AFC3A2C32",
+      "name" : "Introduction & concepts in NN",
+      "isDrawing" : true,
+      "relativePath" : "\/Deep Learning\/Introduction & concepts in NN.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "9073F408F9E14CC7AD939AFBECCEEC63",
+      "parentId" : "5756EEA4E5D54D609B66116AFC3A2C32",
+      "name" : "Learning Rate Schedulers",
+      "isDrawing" : true,
+      "relativePath" : "\/Deep Learning\/Learning Rate Schedulers.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "AD28100CAACF4B68B00D9865349D0BD0",
+      "parentId" : "5756EEA4E5D54D609B66116AFC3A2C32",
+      "name" : "Optimizers & Loss functions",
+      "isDrawing" : true,
+      "relativePath" : "\/Deep Learning\/Optimizers & Loss functions.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "31F8E11CE34D4B779EF60DA7B1E68F70",
+      "parentId" : "5756EEA4E5D54D609B66116AFC3A2C32",
+      "name" : "RNN",
+      "isDrawing" : true,
+      "relativePath" : "\/Deep Learning\/RNN.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "6F52547E9F384490B30026A0131D42EB",
+      "parentId" : "5756EEA4E5D54D609B66116AFC3A2C32",
+      "name" : "Weight Initialization",
+      "isDrawing" : true,
+      "relativePath" : "\/Deep Learning\/Weight Initialization.pdf"
+    }
+  ]
+}

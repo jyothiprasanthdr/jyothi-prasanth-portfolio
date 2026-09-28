@@ -1,0 +1,151 @@
+{
+  "title": "Choose the visual world for your portfolio",
+  "question": "The roll assigned The Run-All Notebook. Keep it, take my pick or the category standard, or re-roll.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "The Run-All Notebook",
+      "kicker": "THE ROLL",
+      "lineage": "Jupyter / JupyterLab cell notebooks",
+      "thesis": "The site is a notebook you run: every section is a cell, and running it renders real output.",
+      "palette": ["#F7F7F4", "#1B1C1E", "#6A6E75", "#E6E5E0", "#F5C400"],
+      "materials": ["execution counters", "cell gutters", "rendered outputs"],
+      "viewport": "Cell [1] runs on load: name, AI Engineer, Bay Area, then its output is the Resume and Email actions; cell [2] sits queued below with the notebook shelf.",
+      "risk": "Becomes costume if any code cell is fake; every code cell must be real code from his repos or the site's own build scripts.",
+      "raised": [
+        { "from": "challenger-step-row", "raise": "One unbroken execution line with a now-marker: the running-cell indicator follows the reader down the page." },
+        { "from": "challenger-exposure-record", "raise": "An eleven-step neutral ramp is the only tonal token set; the one accent means running/active and nothing else." },
+        { "from": "challenger-cereal-aisle", "raise": "Every project has a front and a back: the output shows the result, the collapsed back holds stack, repo, and date." },
+        { "from": "challenger-merz-collage", "raise": "One sans family across a wide size range; mono appears only where a notebook itself would use it." },
+        { "from": "challenger-memory-quilt", "raise": "Provenance seamed to every item: each note and project carries its date, source file, and link." },
+        { "from": "challenger-papercut", "raise": "Depth by overlap only: no drop shadows; the active cell lifts by stacking over its neighbors." }
+      ],
+      "wireframe": {
+        "cols": 12, "rows": 10,
+        "regions": [
+          { "label": "toolbar: name · Run all · Resume", "x": 0, "y": 0, "w": 12, "h": 1 },
+          { "label": "cell index rail", "x": 0, "y": 1, "w": 2, "h": 9 },
+          { "label": "[1] intro cell + output actions", "x": 2, "y": 1, "w": 10, "h": 4, "accent": true },
+          { "label": "[2] notebook shelf output", "x": 2, "y": 5, "w": 10, "h": 3 },
+          { "label": "[3] queued", "x": 2, "y": 8, "w": 10, "h": 2 }
+        ]
+      }
+    },
+    {
+      "id": "model-pick",
+      "label": "The Preprint",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "arXiv preprints typeset in LaTeX",
+      "thesis": "The portfolio typeset as a paper: abstract, numbered sections, figures, and references to the notebooks.",
+      "palette": ["#FFFFFF", "#141414", "#5C5C5C", "#9E1B1B"],
+      "materials": ["numbered sections", "figure captions", "reference list"],
+      "viewport": "Title block with name and affiliation, a 3-line abstract as the pitch, Resume and Email as the footnote links.",
+      "risk": "Familiar: close to the editorial-serif look many portfolios land on, and it reads academic rather than shipping engineer.",
+      "wireframe": {
+        "cols": 12, "rows": 10,
+        "regions": [
+          { "label": "title block", "x": 3, "y": 0, "w": 6, "h": 2, "accent": true },
+          { "label": "abstract", "x": 3, "y": 2, "w": 6, "h": 2 },
+          { "label": "1. Work · 2. Notebooks", "x": 3, "y": 4, "w": 6, "h": 4 },
+          { "label": "references", "x": 3, "y": 8, "w": 6, "h": 2 }
+        ]
+      }
+    },
+    {
+      "id": "challenger-step-row",
+      "label": "Rhythm Machine Step Row",
+      "verdict": "declined",
+      "lineage": "early-80s drum machine step sequencers",
+      "thesis": "Career and notes as a sixteen-step pattern you program.",
+      "palette": ["#2A2A2C", "#D8412F", "#F08A24", "#F2D04B", "#F4F1EA"],
+      "materials": ["step keys", "chase light", "segmented readout"],
+      "viewport": "A sixteen-key step row with a running chase light.",
+      "risk": "Recruiters and AI engineers don't live in this world.",
+      "case": "Fuses poorly: loses audience identification and product clarity.",
+      "kept": "The chase light's always-visible now-marker.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-drum-machine-step-row-hero.webp"
+    },
+    {
+      "id": "challenger-exposure-record",
+      "label": "Darkroom Exposure Record",
+      "verdict": "declined",
+      "lineage": "darkroom printers' exposure cards",
+      "thesis": "Translucent zone sheets with hatched densities.",
+      "palette": ["#EDEDEA", "#8E8E8A", "#2B2B2A", "#C0288A"],
+      "materials": ["zone ramp", "tracing overlays", "hatching"],
+      "viewport": "Overlapping sheets over an eleven-step zone wedge.",
+      "risk": "Opaque metaphor for a job-search audience.",
+      "case": "Fuses poorly: loses both axes.",
+      "kept": "A strict tonal ramp as the only tonal tokens.",
+      "hero": "https://impeccable.style/worlds/cards/operate-b-exposure-record-zone-sheets-hero.webp"
+    },
+    {
+      "id": "challenger-cereal-aisle",
+      "label": "Cereal Box Aisle",
+      "verdict": "declined",
+      "lineage": "supermarket planogram shelving",
+      "thesis": "Projects as boxes on a shelf, flip for the back panel.",
+      "palette": ["#D7261E", "#FFC61A", "#FFFFFF", "#1D3C8F"],
+      "materials": ["coated board", "starburst violators"],
+      "viewport": "A planogram wall of project boxes.",
+      "risk": "Undercuts a professional job search.",
+      "case": "Fuses poorly: loses both axes.",
+      "kept": "Front panel for the result, back panel for the fine print.",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-cereal-box-aisle-hero.webp"
+    },
+    {
+      "id": "challenger-merz-collage",
+      "label": "Merz Collage Page",
+      "verdict": "declined",
+      "lineage": "Schwitters dada assemblage",
+      "thesis": "A found-object pinboard of scraps.",
+      "palette": ["#E8DFC8", "#9A968C", "#8C2B24"],
+      "materials": ["torn newsprint", "tram tickets", "printers' fists"],
+      "viewport": "Scraps pasted at angles, no dominant axis.",
+      "risk": "Chaos reads as disorganized to recruiters.",
+      "case": "Fuses poorly: loses both axes.",
+      "kept": "Commitment to one type case used across many sizes.",
+      "hero": "https://impeccable.style/worlds/cards/design-canon-merz-collage-page-hero.webp"
+    },
+    {
+      "id": "challenger-memory-quilt",
+      "label": "Memory Quilt Atlas",
+      "verdict": "declined",
+      "lineage": "hand-pieced garment quilts",
+      "thesis": "Blocks that each carry a date and a history.",
+      "palette": ["#6F8FB3", "#1C1C1C", "#C8342B", "#5B3A22"],
+      "materials": ["pieced cloth", "stitch rules", "handwritten labels"],
+      "viewport": "A quilt grid of unequal patches.",
+      "risk": "Domestic warmth mismatches an engineering pitch.",
+      "case": "Fuses poorly: loses both axes.",
+      "kept": "Provenance stitched to every item.",
+      "hero": "https://impeccable.style/worlds/cards/textiles-weave-drape-fashion-memory-quilt-atlas-hero.webp"
+    },
+    {
+      "id": "challenger-papercut",
+      "label": "Łowicz Layered Papercut",
+      "verdict": "declined",
+      "lineage": "Polish folk papercutting",
+      "thesis": "Depth built from pasted flat layers.",
+      "palette": ["#D62828", "#2E7D32", "#F4C430", "#1B4F9C"],
+      "materials": ["glossy cut paper", "fold symmetry"],
+      "viewport": "A symmetrical layered roundel.",
+      "risk": "Folk ornament has no tie to the subject.",
+      "case": "Fuses poorly: loses both axes.",
+      "kept": "Depth from overlap, never from shadow.",
+      "hero": "https://impeccable.style/worlds/cards/craft-making-lowicz-layered-papercut-hero.webp"
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "code", "toggle": false },
+  "canon": true,
+  "canonCard": {
+    "label": "The category standard",
+    "thesis": "A clean developer portfolio: hero, project grid, experience, contact, executed at full craft.",
+    "palette": ["#FFFFFF", "#111827", "#2563EB"],
+    "materials": ["clean grid", "project cards"],
+    "viewport": "Name and role, two actions, then a project grid.",
+    "risk": "Indistinguishable from other portfolios by design."
+  },
+  "steer": true
+}

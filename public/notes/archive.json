@@ -1,0 +1,53 @@
+{
+  "appVersion" : "1.4.38",
+  "appBuild" : "204",
+  "packageFormatVersion" : "1.21",
+  "version" : 1,
+  "type" : "dataExport",
+  "createdAt" : "2026-09-02T10:44:18Z",
+  "items" : [
+    {
+      "parentId" : "",
+      "position" : "+EMJCv1",
+      "colorIndex" : 8,
+      "id" : "74A7B5017CBF413DB8A04644F731F4A6",
+      "isFolder" : true,
+      "subtype" : 0,
+      "relativePath" : "\/MLops",
+      "name" : "MLops",
+      "icon" : ""
+    },
+    {
+      "subtype" : 0,
+      "id" : "02F382018AA4490DA5939FEDDAEA6CB0",
+      "parentId" : "74A7B5017CBF413DB8A04644F731F4A6",
+      "name" : "Airflow",
+      "isDrawing" : true,
+      "relativePath" : "\/MLops\/Airflow.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "13009764D0914CD48C91D3F8DEE4AFA5",
+      "parentId" : "74A7B5017CBF413DB8A04644F731F4A6",
+      "name" : "Cloud - AWS",
+      "isDrawing" : true,
+      "relativePath" : "\/MLops\/Cloud - AWS.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "D99C0161C6E2411AB3773539E6AB8F73",
+      "parentId" : "74A7B5017CBF413DB8A04644F731F4A6",
+      "name" : "Docker",
+      "isDrawing" : true,
+      "relativePath" : "\/MLops\/Docker.pdf"
+    },
+    {
+      "subtype" : 0,
+      "id" : "8670BCDA75F84F53AD5CCFCE4098C192",
+      "parentId" : "74A7B5017CBF413DB8A04644F731F4A6",
+      "name" : "Kubernetes",
+      "isDrawing" : true,
+      "relativePath" : "\/MLops\/Kubernetes.pdf"
+    }
+  ]
+}

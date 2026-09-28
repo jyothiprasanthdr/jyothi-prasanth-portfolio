@@ -1,0 +1,282 @@
+[
+  {
+    "id": "note--notes-mlops-cloud---aws-pdf",
+    "title": "Cloud - AWS",
+    "category": "MLops",
+    "notebookName": "Cloud - AWS.pdf",
+    "description": "Noteful App iPad notebook export: Cloud - AWS (MLops).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "MLops"
+    ],
+    "fileUrl": "/notes/MLops/Cloud - AWS.pdf",
+    "lastModified": 1788346020722
+  },
+  {
+    "id": "note--notes-mlops-airflow-pdf",
+    "title": "Airflow",
+    "category": "MLops",
+    "notebookName": "Airflow.pdf",
+    "description": "Noteful App iPad notebook export: Airflow (MLops).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "MLops"
+    ],
+    "fileUrl": "/notes/MLops/Airflow.pdf",
+    "lastModified": 1788346020654
+  },
+  {
+    "id": "note--notes-mlops-kubernetes-pdf",
+    "title": "Kubernetes",
+    "category": "MLops",
+    "notebookName": "Kubernetes.pdf",
+    "description": "Noteful App iPad notebook export: Kubernetes (MLops).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "MLops"
+    ],
+    "fileUrl": "/notes/MLops/Kubernetes.pdf",
+    "lastModified": 1788346020646
+  },
+  {
+    "id": "note--notes-mlops-docker-pdf",
+    "title": "Docker",
+    "category": "MLops",
+    "notebookName": "Docker.pdf",
+    "description": "Noteful App iPad notebook export: Docker (MLops).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "MLops"
+    ],
+    "fileUrl": "/notes/MLops/Docker.pdf",
+    "lastModified": 1788346020610
+  },
+  {
+    "id": "note--notes-gen-ai-prompt-engineering-pdf",
+    "title": "Prompt Engineering",
+    "category": "Gen AI",
+    "notebookName": "Prompt Engineering.pdf",
+    "description": "Noteful App iPad notebook export: Prompt Engineering (Gen AI).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Gen AI"
+    ],
+    "fileUrl": "/notes/Gen AI/Prompt Engineering.pdf",
+    "lastModified": 1788346020603
+  },
+  {
+    "id": "note--notes-gen-ai-parameter-efficient-fine-tuning-pdf",
+    "title": "Parameter Efficient Fine Tuning",
+    "category": "Gen AI",
+    "notebookName": "Parameter Efficient Fine Tuning.pdf",
+    "description": "Noteful App iPad notebook export: Parameter Efficient Fine Tuning (Gen AI).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Gen AI"
+    ],
+    "fileUrl": "/notes/Gen AI/Parameter Efficient Fine Tuning.pdf",
+    "lastModified": 1788346020594
+  },
+  {
+    "id": "note--notes-gen-ai-langgraph-pdf",
+    "title": "LangGraph",
+    "category": "Gen AI",
+    "notebookName": "LangGraph.pdf",
+    "description": "Noteful App iPad notebook export: LangGraph (Gen AI).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Gen AI"
+    ],
+    "fileUrl": "/notes/Gen AI/LangGraph.pdf",
+    "lastModified": 1788346020547
+  },
+  {
+    "id": "note--notes-gen-ai-langchain-detailed-pdf",
+    "title": "LangChain Detailed",
+    "category": "Gen AI",
+    "notebookName": "LangChain Detailed.pdf",
+    "description": "Noteful App iPad notebook export: LangChain Detailed (Gen AI).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Gen AI"
+    ],
+    "fileUrl": "/notes/Gen AI/LangChain Detailed.pdf",
+    "lastModified": 1788346020525
+  },
+  {
+    "id": "note--notes-gen-ai-transformer-pdf",
+    "title": "Transformer",
+    "category": "Gen AI",
+    "notebookName": "Transformer.pdf",
+    "description": "Noteful App iPad notebook export: Transformer (Gen AI).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Gen AI"
+    ],
+    "fileUrl": "/notes/Gen AI/Transformer.pdf",
+    "lastModified": 1788346020522
+  },
+  {
+    "id": "note--notes-gen-ai-rag-pdf",
+    "title": "RAG",
+    "category": "Gen AI",
+    "notebookName": "RAG.pdf",
+    "description": "Noteful App iPad notebook export: RAG (Gen AI).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Gen AI"
+    ],
+    "fileUrl": "/notes/Gen AI/RAG.pdf",
+    "lastModified": 1788346020507
+  },
+  {
+    "id": "note--notes-gen-ai-mcp---model-context-protocol-pdf",
+    "title": "MCP - Model Context Protocol",
+    "category": "Gen AI",
+    "notebookName": "MCP - Model Context Protocol.pdf",
+    "description": "Noteful App iPad notebook export: MCP - Model Context Protocol (Gen AI).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Gen AI"
+    ],
+    "fileUrl": "/notes/Gen AI/MCP - Model Context Protocol.pdf",
+    "lastModified": 1788346020474
+  },
+  {
+    "id": "note--notes-gen-ai-redteaming-pdf",
+    "title": "RedTeaming",
+    "category": "Gen AI",
+    "notebookName": "RedTeaming.pdf",
+    "description": "Noteful App iPad notebook export: RedTeaming (Gen AI).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Gen AI"
+    ],
+    "fileUrl": "/notes/Gen AI/RedTeaming.pdf",
+    "lastModified": 1788346020471
+  },
+  {
+    "id": "note--notes-gen-ai-chunking-techniques-for-rag-pdf",
+    "title": "Chunking Techniques for RAG",
+    "category": "Gen AI",
+    "notebookName": "Chunking Techniques for RAG.pdf",
+    "description": "Noteful App iPad notebook export: Chunking Techniques for RAG (Gen AI).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Gen AI"
+    ],
+    "fileUrl": "/notes/Gen AI/Chunking Techniques for RAG.pdf",
+    "lastModified": 1788346020464
+  },
+  {
+    "id": "note--notes-deep-learning-optimizers---loss-functions-pdf",
+    "title": "Optimizers & Loss functions",
+    "category": "Deep Learning",
+    "notebookName": "Optimizers & Loss functions.pdf",
+    "description": "Noteful App iPad notebook export: Optimizers & Loss functions (Deep Learning).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Deep Learning"
+    ],
+    "fileUrl": "/notes/Deep Learning/Optimizers & Loss functions.pdf",
+    "lastModified": 1788346020454
+  },
+  {
+    "id": "note--notes-deep-learning-introduction---concepts-in-nn-pdf",
+    "title": "Introduction & concepts in NN",
+    "category": "Deep Learning",
+    "notebookName": "Introduction & concepts in NN.pdf",
+    "description": "Noteful App iPad notebook export: Introduction & concepts in NN (Deep Learning).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Deep Learning"
+    ],
+    "fileUrl": "/notes/Deep Learning/Introduction & concepts in NN.pdf",
+    "lastModified": 1788346020441
+  },
+  {
+    "id": "note--notes-deep-learning-weight-initialization-pdf",
+    "title": "Weight Initialization",
+    "category": "Deep Learning",
+    "notebookName": "Weight Initialization.pdf",
+    "description": "Noteful App iPad notebook export: Weight Initialization (Deep Learning).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Deep Learning"
+    ],
+    "fileUrl": "/notes/Deep Learning/Weight Initialization.pdf",
+    "lastModified": 1788346020435
+  },
+  {
+    "id": "note--notes-deep-learning-learning-rate-schedulers-pdf",
+    "title": "Learning Rate Schedulers",
+    "category": "Deep Learning",
+    "notebookName": "Learning Rate Schedulers.pdf",
+    "description": "Noteful App iPad notebook export: Learning Rate Schedulers (Deep Learning).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Deep Learning"
+    ],
+    "fileUrl": "/notes/Deep Learning/Learning Rate Schedulers.pdf",
+    "lastModified": 1788346020430
+  },
+  {
+    "id": "note--notes-deep-learning-cnn-pdf",
+    "title": "CNN",
+    "category": "Deep Learning",
+    "notebookName": "CNN.pdf",
+    "description": "Noteful App iPad notebook export: CNN (Deep Learning).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Deep Learning"
+    ],
+    "fileUrl": "/notes/Deep Learning/CNN.pdf",
+    "lastModified": 1788346020422
+  },
+  {
+    "id": "note--notes-deep-learning-rnn-pdf",
+    "title": "RNN",
+    "category": "Deep Learning",
+    "notebookName": "RNN.pdf",
+    "description": "Noteful App iPad notebook export: RNN (Deep Learning).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Deep Learning"
+    ],
+    "fileUrl": "/notes/Deep Learning/RNN.pdf",
+    "lastModified": 1788346020410
+  },
+  {
+    "id": "note--notes-deep-learning-activation-functions-pdf",
+    "title": "Activation Functions",
+    "category": "Deep Learning",
+    "notebookName": "Activation Functions.pdf",
+    "description": "Noteful App iPad notebook export: Activation Functions (Deep Learning).",
+    "date": "Sep 2026",
+    "tags": [
+      "Noteful Export",
+      "Deep Learning"
+    ],
+    "fileUrl": "/notes/Deep Learning/Activation Functions.pdf",
+    "lastModified": 1788346020402
+  }
+]
