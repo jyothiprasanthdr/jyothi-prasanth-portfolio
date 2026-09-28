@@ -238,42 +238,6 @@ document.querySelectorAll<HTMLButtonElement>('[data-cell-link]').forEach((button
   });
 });
 
-// ---------- Hero stack: tilts toward the pointer (fine pointers, motion allowed) ----------
-const stack = document.querySelector<HTMLElement>('[data-stack]');
-const stackBody = stack?.querySelector<HTMLElement>('[data-stack-body]');
-const hero = stack?.closest<HTMLElement>('[data-cell]');
-if (
-  stack &&
-  stackBody &&
-  hero &&
-  matchMedia('(hover: hover) and (pointer: fine)').matches &&
-  !matchMedia('(prefers-reduced-motion: reduce)').matches
-) {
-  let frame = 0;
-  let px = 0;
-  let py = 0;
-  const apply = () => {
-    frame = 0;
-    const r = stack.getBoundingClientRect();
-    // -1..1 from the stack's centre, clamped so far-away pointers don't over-rotate.
-    const x = Math.max(-1, Math.min(1, (px - (r.left + r.width / 2)) / (r.width * 1.5)));
-    const y = Math.max(-1, Math.min(1, (py - (r.top + r.height / 2)) / (r.height * 1.5)));
-    stackBody.style.setProperty('--tx', `${(x * 12).toFixed(2)}deg`);
-    stackBody.style.setProperty('--ty', `${(-y * 9).toFixed(2)}deg`);
-  };
-  hero.addEventListener('pointermove', (e) => {
-    px = e.clientX;
-    py = e.clientY;
-    if (!frame) frame = requestAnimationFrame(apply);
-  });
-  hero.addEventListener('pointerleave', () => {
-    cancelAnimationFrame(frame);
-    frame = 0;
-    stackBody.style.setProperty('--tx', '0deg');
-    stackBody.style.setProperty('--ty', '0deg');
-  });
-}
-
 // ---------- Copy email ----------
 document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
   const label = button.querySelector<HTMLElement>('[data-copy-label]');

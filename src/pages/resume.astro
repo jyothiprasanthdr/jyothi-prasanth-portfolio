@@ -5,7 +5,6 @@ import Icon from '../components/Icon.astro';
 import { profile } from '../data/profile';
 import { experience, education, tools, headline, summary, resumeLocation } from '../data/resume';
 import { publicProjects } from '../lib/projects';
-import { notebooks } from '../lib/notes';
 
 const projects = await publicProjects();
 // The download only appears once the PDF is actually in public/.
@@ -125,13 +124,6 @@ const hasPdf = existsSync(`public${profile.resumePdf}`);
       </dl>
     </section>
 
-    <section aria-labelledby="notes">
-      <h2 id="notes">Notebooks</h2>
-      <p class="org">
-        {notebooks.length} handwritten study notebooks on Gen AI, deep learning, and MLOps.{' '}
-        <a href="/notes">Read them online</a>.
-      </p>
-    </section>
   </article>
 </Base>
 

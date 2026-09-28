@@ -4,19 +4,14 @@ import Cell from '../components/Cell.astro';
 import Rail from '../components/Rail.astro';
 import Icon from '../components/Icon.astro';
 import ContributionPlot from '../components/ContributionPlot.astro';
-import NotebookCard from '../components/NotebookCard.astro';
-import NotebookStack from '../components/NotebookStack.astro';
 import { profile } from '../data/profile';
 import { experience, education, tools } from '../data/resume';
-import { notebooks, recentNotebooks } from '../lib/notes';
 import { publicProjects } from '../lib/projects';
 import { region } from '../lib/source';
 import stats from '../data/stats.json';
-import notesSource from '../lib/notes.ts?raw';
 import projectsSource from '../lib/projects.ts?raw';
 import statsSource from '../../scripts/fetch-stats.mjs?raw';
 
-const shelf = recentNotebooks(6);
 // The home page shows the first few tools per group; /resume has the full list from the PDF.
 const HOME_TOOLS = 5;
 const projects = await publicProjects();
@@ -26,8 +21,7 @@ const railItems = [
   { n: 2, id: 'experience', label: 'Experience' },
   { n: 3, id: 'practice', label: 'Practice' },
   { n: 4, id: 'projects', label: 'Projects' },
-  { n: 5, id: 'notebooks', label: 'Handwritten notebooks' },
-  { n: 6, id: 'contact', label: 'Contact' },
+  { n: 5, id: 'contact', label: 'Contact' },
 ];
 
 const fetchedOn = stats.fetchedAt
@@ -45,7 +39,7 @@ const stdout =
 
 <Base
   title="Jyothi Prasanth · AI Engineer"
-  description="AI engineer in the Bay Area building agent and retrieval systems. Handwritten notebooks, public projects, and resume."
+  description="AI engineer in the Bay Area building agent and retrieval systems. Experience, public projects, and resume."
   home
 >
   <div class="visually-hidden" aria-live="polite" data-live></div>
@@ -54,19 +48,14 @@ const stdout =
 
     <div class="cells">
       <Cell section={1} id="about" kind="markdown" toc="About" source={`# ${profile.name}`}>
-        <div class="hero">
-          <div class="hero-text">
-            <h1 class="name">{profile.name}</h1>
-            <p class="intro">{profile.intro}</p>
-            <div class="actions">
-              <a class="btn btn-primary" href={`mailto:${profile.email}`}>Email me</a>
-              <a class="btn btn-secondary" href={profile.links.github} target="_blank" rel="noopener">
-                GitHub <Icon name="arrowUpRight" size={14} />
-                <span class="visually-hidden">(opens in new tab)</span>
-              </a>
-            </div>
-          </div>
-          <NotebookStack />
+        <h1 class="name">{profile.name}</h1>
+        <p class="intro">{profile.intro}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href={`mailto:${profile.email}`}>Email me</a>
+          <a class="btn btn-secondary" href={profile.links.github} target="_blank" rel="noopener">
+            GitHub <Icon name="arrowUpRight" size={14} />
+            <span class="visually-hidden">(opens in new tab)</span>
+          </a>
         </div>
       </Cell>
 
@@ -208,30 +197,7 @@ const stdout =
         </ul>
       </Cell>
 
-      <Cell section={5} id="notebooks" kind="markdown" toc="Handwritten notebooks" source="## Handwritten notebooks">
-        <h2 class="section-title">Handwritten notebooks</h2>
-        <p class="lede">
-          {notebooks.length} notebooks I wrote by hand while learning the systems I build: transformers, RAG, LangGraph,
-          fine-tuning, and MLOps.
-        </p>
-      </Cell>
-
-      <Cell n={3} id="notebooks-shelf" kind="code" input={region(notesSource, 'shelf')} inputLabel="src/lib/notes.ts">
-        <ul class="shelf" role="list">
-          {
-            shelf.map((nb) => (
-              <li>
-                <NotebookCard nb={nb} />
-              </li>
-            ))
-          }
-        </ul>
-        <a class="more" href="/notes">
-          Open all {notebooks.length} notebooks <Icon name="arrowRight" size={14} />
-        </a>
-      </Cell>
-
-      <Cell section={6} id="contact" kind="markdown" toc="Contact" source="## Contact">
+      <Cell section={5} id="contact" kind="markdown" toc="Contact" source="## Contact">
         <h2 class="section-title">Contact</h2>
         <p class="lede">Hiring for AI engineering work? Email me.</p>
         <div class="email-row">
@@ -273,14 +239,6 @@ const stdout =
     min-width: 0;
   }
 
-  /* ---------- Hero: text left, the notebook stack right ---------- */
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) clamp(210px, 36%, 270px);
-    align-items: center;
-    column-gap: 32px;
-  }
-
   .name {
     font-size: var(--text-hero);
     letter-spacing: -0.035em;
@@ -313,15 +271,6 @@ const stdout =
     margin-top: 8px;
     max-width: 62ch;
     color: var(--ink-2);
-  }
-
-  /* ---------- Notebook shelf ---------- */
-  .shelf {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px 20px;
   }
 
   .more {
@@ -529,19 +478,6 @@ const stdout =
       padding: 16px 16px 0;
     }
 
-    .shelf {
-      grid-template-columns: repeat(6, minmax(62%, 1fr));
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      gap: 16px;
-      padding-bottom: 8px;
-      overscroll-behavior-x: contain;
-    }
-
-    .shelf > li {
-      scroll-snap-align: start;
-    }
-
     .tools {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -562,16 +498,6 @@ const stdout =
     .when {
       padding-top: 0;
       order: 1;
-    }
-
-    .hero {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .hero :global(.stack) {
-      width: min(210px, 62%);
-      justify-self: center;
-      margin-top: 8px;
     }
   }
 </style>

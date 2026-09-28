@@ -89,7 +89,7 @@
   ],
   "narrative": {
     "northStar": "The Run-All Notebook",
-    "overview": "The site is a Jupyter notebook you run. Every section is a cell. Markdown cells render headings and prose. Code cells show real source from this repository with an In [n]: prompt and render their results beside Out[n]:. On a first visit the page executes as you read it. That is the one piece of theatre the system allows, and it exists to show that the page is doing work. The mood is a lab bench in daylight: paper-white ground, graphite ink, hairline rules, and nothing that glows. Evidence carries the page. The handwritten notebook pages are the richest material on the site, and the interface steps back so they can lead.",
+    "overview": "The site is a Jupyter notebook you run. Every section is a cell. Markdown cells render headings and prose. Code cells show real source from this repository with an In [n]: prompt and render their results beside Out[n]:. On a first visit the page executes as you read it. That is the one piece of theatre the system allows, and it exists to show that the page is doing work. The mood is a lab bench in daylight: paper-white ground, graphite ink, hairline rules, and nothing that glows. Evidence carries the page: roles, real stats, and public projects. The handwritten study notes live on their own pages (/notes), outside the numbered flow.",
     "keyCharacteristics": [
       "Light paper ground; one theme.",
       "A graphite neutral ramp is the only tonal system.",
@@ -108,7 +108,7 @@
       "Do keep every code cell's input a real // #region block read from the repository at build time.",
       "Do separate surfaces with 1px hairlines and tone steps.",
       "Do keep entrance motion under 300ms with a strong ease-out, and never animate keyboard-initiated moves.",
-      "Do let the handwritten page images carry the visual weight; frame them in a 1px Hairline at 4px radius."
+      "Do frame handwritten page images (on /notes only) in a 1px Hairline at 4px radius."
     ],
     "donts": [
       "Don't add drop shadows, glows, gradients, or a dark theme section.",

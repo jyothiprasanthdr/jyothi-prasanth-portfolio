@@ -88,7 +88,7 @@ components:
 
 The site is a Jupyter notebook you run. Every section is a cell. Markdown cells render headings and prose. Code cells show real source from this repository with an `In [n]:` prompt and render their results beside `Out[n]:`. On a first visit the page executes as you read it. That is the one piece of theatre the system allows, and it exists to show that the page is doing work.
 
-The mood is a lab bench in daylight: paper-white ground, graphite ink, hairline rules, and nothing that glows. Evidence carries the page. The handwritten notebook pages are the richest material on the site, and the interface steps back so they can lead.
+The mood is a lab bench in daylight: paper-white ground, graphite ink, hairline rules, and nothing that glows. Evidence carries the page: roles, real stats, and public projects. The handwritten study notes live on their own pages (/notes), outside the numbered flow.
 
 **Key Characteristics:**
 - Light paper ground; one theme.
@@ -130,7 +130,7 @@ A restrained neutral ramp with a single signal accent.
 
 ### Hierarchy
 - **Display** (600, clamp 2.5–3.5rem, 1.02): the name in section 1 only.
-- **Headline** (600, 1.75rem, 1.15): section headings (sections 2–6) and page titles on the reader and library.
+- **Headline** (600, 1.75rem, 1.15): section headings (sections 2–5) and page titles on the reader and library.
 - **Title** (600, 1.3125rem): project names and sub-headings.
 - **Body** (400, 1rem, 1.6): prose, capped at about 62–68ch; `text-wrap: pretty`.
 - **Label** (Geist Mono, 0.8125rem, tabular figures): execution counts, file labels, dates, stats, page counts.
@@ -142,7 +142,7 @@ A restrained neutral ramp with a single signal accent.
 
 The home page is a two-column notebook: a 200px sticky contents rail, then a cell column of at most 800px, inside a 1120px frame with 24px gutters. Each cell is a two-column grid: a 72px right-aligned prompt gutter and the cell body. A section starts with 64px of extra space above its heading cell (40px on phones).
 
-Below 860px the rail becomes a Contents dialog, prompts stack above their cells, code wraps instead of scrolling, the notebook shelf becomes a horizontal scroll-snap row, the contribution plot shows the last 26 weeks, and tables drop their index and Location columns. Spacing steps are 4, 8, 12, 16, 24, 32, 40, and 96px.
+Below 860px the rail becomes a Contents dialog, prompts stack above their cells, code wraps instead of scrolling, the contribution plot shows the last 26 weeks, and the experience timeline stacks. Spacing steps are 4, 8, 12, 16, 24, 32, 40, and 96px.
 
 ## Elevation & Depth
 
@@ -173,12 +173,6 @@ Two radii only: 4px on controls, chips, notebook-page frames, and inputs; 8px on
 - **Run states:** pending (`In [ ]:` with raw markdown source showing), running (yellow chip), done (the output fades in over 180ms with a 4px rise, and the source disappears instantly so the two texts never overlap).
 - **Section link:** on hover or focus-within, a 32px copy-link button appears at the heading cell's top right.
 
-### Notebook stack (hero object)
-- Five real handwritten pages stacked in CSS 3D (`perspective` + `preserve-3d`), no WebGL. Each sheet one step further back is offset, rotated, and 3.5% darker: depth from overlap and tone, never a shadow.
-- Entrance: sheets are dealt back to front (560ms ease-out, 70ms stagger) on the `translate` property so it never fights the resting transform.
-- Fine pointers: the stack tilts toward the pointer (one rAF per move, max 12deg) and fans open on hover or focus. Touch and reduced motion get the static stack.
-- The whole stack is one link to /notes with a mono caption of real counts.
-
 ### Experience timeline
 - Dates in a 168px mono gutter, role then company and location. Spacing separates entries, not row rules. On phones the dates move under the role.
 
@@ -187,7 +181,8 @@ Two radii only: 4px on controls, chips, notebook-page frames, and inputs; 8px on
 
 ### Navigation
 - **Toolbar:** 56px sticky bar: mono wordmark `jyothi-prasanth.ipynb`, Run all in the center, and on the right the kernel status (hollow dot when idle, filled while a cell executes) and a secondary Resume button (hidden on /resume itself). It always fits on one line, and the Contents button becomes icon-only below 480px.
-- **Contents rail:** section number plus label. The current section shows the running chip and Ink text.
+- **Contents rail:** section number plus label. The current section shows the running chip and Ink text. Below the numbered list, outside the story, sit two quiet icon links: Study notes (/notes) and Keyboard shortcuts. The phone Contents dialog repeats Study notes under a hairline.
+- **Footer:** GitHub, LinkedIn, Email, and Notes on every page.
 
 ## Do's and Don'ts
 
@@ -195,9 +190,9 @@ Two radii only: 4px on controls, chips, notebook-page frames, and inputs; 8px on
 - **Do** use Execution Yellow only as a chip with Ink text, only for running or active state.
 - **Do** keep every code cell's input a real `// #region` block read from the repository at build time.
 - **Do** separate surfaces with 1px hairlines and tone steps.
-- **Do** keep UI motion under 300ms with a strong ease-out (the hero deal and card-to-reader morph are the only longer ones), and never animate keyboard-initiated moves.
+- **Do** keep UI motion under 300ms with a strong ease-out (the card-to-reader morph on /notes is the only longer one), and never animate keyboard-initiated moves.
 - **Do** let pages hand off with the native cross-document view transition: a notebook card morphs into the reader's first page; everything else crossfades in 180ms.
-- **Do** let the handwritten page images carry the visual weight; frame them in a 1px Hairline at 4px radius.
+- **Do** frame handwritten page images (on /notes only) in a 1px Hairline at 4px radius.
 
 ### Don't:
 - **Don't** add drop shadows, glows, gradients, or a dark theme section.

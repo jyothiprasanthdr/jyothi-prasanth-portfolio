@@ -22,13 +22,13 @@ const pdfName = decodeURI(nb.pdf).split('/').pop();
 ---
 
 <Base
-  title={`${nb.title} · Handwritten notebook · Jyothi Prasanth`}
+  title={`${nb.title} · Study notes · Jyothi Prasanth`}
   description={`A ${nb.pages}-page handwritten notebook on ${nb.title} (${nb.category}).`}
   crumb={[{ label: 'notes', href: '/notes' }, { label: nb.title }]}
 >
   <article class="reader">
     <header class="reader-head">
-      <a class="back" href="/notes"><Icon name="arrowLeft" size={14} /> All notebooks</a>
+      <a class="back" href="/notes"><Icon name="arrowLeft" size={14} /> All study notes</a>
       <h1>{nb.title}</h1>
       <p class="meta">{nb.category} · {nb.pages} pages</p>
       <div class="reader-actions">

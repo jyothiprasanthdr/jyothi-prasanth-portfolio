@@ -79,10 +79,11 @@ const year = new Date().getFullYear();
     <footer class="site-footer">
       <div class="footer-inner">
         <span>© {year} {profile.name}</span>
-        <nav aria-label="Elsewhere">
+        <nav aria-label="Footer">
           <a href={profile.links.github} rel="noopener" target="_blank">GitHub<span class="visually-hidden"> (opens in new tab)</span></a>
           <a href={profile.links.linkedin} rel="noopener" target="_blank">LinkedIn<span class="visually-hidden"> (opens in new tab)</span></a>
           <a href={`mailto:${profile.email}`}>Email</a>
+          <a href="/notes">Notes</a>
         </nav>
       </div>
     </footer>

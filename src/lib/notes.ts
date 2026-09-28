@@ -45,9 +45,3 @@ export const categories = [...new Set(notebooks.map((n) => n.category))].map((la
 }));
 
 export const pageUrl = (slug: string, page: number) => `/notebook-pages/${slug}/p-${String(page).padStart(3, '0')}.webp`;
-
-// #region shelf
-export function recentNotebooks(limit = 6) {
-  return notebooks.slice(0, limit);
-}
-// #endregion shelf

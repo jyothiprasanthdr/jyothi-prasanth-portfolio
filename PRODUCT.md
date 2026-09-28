@@ -17,11 +17,11 @@ Delegated (owner answered "your call"). Chosen: **Astro**, static output, with i
 
 ## Product Purpose
 
-A personal site for Jyothi Prasanth that gets him interviews for AI Engineer roles. Success means a recruiter can find the resume and contact route immediately, and a technical reader finds enough real work to trust the resume.
+A personal site for Jyothi Prasanth that earns interviews for AI Engineer roles. Success means a recruiter can find the resume and contact route immediately, and a technical reader finds enough real work to trust the resume.
 
 ## Positioning
 
-An AI engineer who learns in public by hand: 20 handwritten notebooks on transformers, RAG, LangGraph, PEFT, and MLOps, published as the working record behind the resume. A generic portfolio can list the same tools; it cannot show the notebooks.
+An AI engineer who builds agent and retrieval systems. The pitch is experience, practice, and public projects. The 20 handwritten notebooks are the owner's personal study notes (changed 2026-09-28, see NOTES_SPEC.md): kept on the site at /notes for anyone curious, reachable from the footer and the contents rail, but never part of the main flow.
 
 ## Operating Context
 
@@ -57,7 +57,7 @@ An AI engineer who learns in public by hand: 20 handwritten notebooks on transfo
 
 1. The resume and the contact route are never more than one action away.
 2. Show real work; never claim what can't be linked or verified.
-3. The notebooks are the differentiator; treat them as primary evidence, not an appendix.
+3. The study notes are personal reference: one click away, never pushed into the pitch.
 4. Employer confidentiality outranks storytelling.
 
 ## Accessibility & Inclusion

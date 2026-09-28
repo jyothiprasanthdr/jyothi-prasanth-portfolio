@@ -2,7 +2,7 @@ export const profile = {
   name: 'Jyothi Prasanth',
   role: 'AI Engineer',
   location: 'Bay Area, California',
-  intro: 'AI engineer in the Bay Area. I build agent and retrieval systems, and I learn them by hand.',
+  intro: 'AI engineer in the Bay Area. I build agent and retrieval systems.',
   status: 'open to AI Engineer roles',
   email: 'jyothiprasanthdr@gmail.com',
   links: {
